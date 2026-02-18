@@ -2,10 +2,10 @@
 
 :root {
   --background: #0a0a0a;
-  --foreground: #f0f0f0;
+  --foreground: #f5f5f5;
   --accent: #fbbf24;
-  --muted: #a3a3a3;
-  --border: #262626;
+  --muted: #c0c0c0;
+  --border: #2e2e2e;
 }
 
 @theme inline {
@@ -21,4 +21,7 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
 }

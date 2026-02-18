@@ -1,21 +1,5 @@
 import { NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
-
-const SUBSCRIBERS_FILE = path.join(process.cwd(), "subscribers.json");
-
-async function readSubscribers(): Promise<{ email: string; date: string }[]> {
-  try {
-    const data = await fs.readFile(SUBSCRIBERS_FILE, "utf-8");
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
-}
-
-async function writeSubscribers(subs: { email: string; date: string }[]) {
-  await fs.writeFile(SUBSCRIBERS_FILE, JSON.stringify(subs, null, 2));
-}
+import { Resend } from "resend";
 
 export async function POST(request: Request) {
   try {
@@ -25,14 +9,40 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid email" }, { status: 400 });
     }
 
-    const subscribers = await readSubscribers();
-
-    if (subscribers.some((s) => s.email === email)) {
-      return NextResponse.json({ message: "Already subscribed" });
+    if (!process.env.RESEND_API_KEY) {
+      return NextResponse.json({ error: "Not configured" }, { status: 500 });
     }
 
-    subscribers.push({ email, date: new Date().toISOString() });
-    await writeSubscribers(subscribers);
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL;
+    const AUDIENCE_ID = process.env.RESEND_AUDIENCE_ID;
+
+    const tasks: Promise<unknown>[] = [];
+
+    // Add to Resend audience/contacts list
+    if (AUDIENCE_ID) {
+      tasks.push(
+        resend.contacts.create({
+          email,
+          audienceId: AUDIENCE_ID,
+          unsubscribed: false,
+        })
+      );
+    }
+
+    // Notify campaign owner
+    if (NOTIFICATION_EMAIL) {
+      tasks.push(
+        resend.emails.send({
+          from: "No Russia at Paralympics <onboarding@resend.dev>",
+          to: NOTIFICATION_EMAIL,
+          subject: `New subscriber: ${email}`,
+          text: `New subscriber signed up at no-russia-at-olympics.vercel.app\n\nEmail: ${email}\nTime: ${new Date().toISOString()}`,
+        })
+      );
+    }
+
+    await Promise.all(tasks);
 
     return NextResponse.json({ message: "Subscribed" });
   } catch {
