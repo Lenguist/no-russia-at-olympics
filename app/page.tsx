@@ -187,9 +187,18 @@ function getPostText(postName: string, twitterHandle: string): string {
 export default function Home() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [orgEmail, setOrgEmail] = useState("");
+  const [orgWhy, setOrgWhy] = useState("");
+  const [orgSocial, setOrgSocial] = useState("");
+  const [orgSubmitted, setOrgSubmitted] = useState(false);
   const [stats, setStats] = useState<{
     actionTakers: number;
     totalActions: number;
+    pageViews: number;
+    uniqueVisitors: number;
+    twitterClicks: number;
+    instagramClicks: number;
+    tiktokClicks: number;
   } | null>(null);
   const [checkedActions, setCheckedActions] = useState<Set<string>>(new Set());
   const [selectedSponsor, setSelectedSponsor] = useState<string | null>(null);
@@ -204,6 +213,23 @@ export default function Home() {
       .then((r) => r.json())
       .then((data) => setStats(data))
       .catch(() => {});
+
+    // Track page view
+    fetch("/api/actions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "page_view" }),
+    }).catch(() => {});
+
+    // Track unique visitor (once per browser)
+    if (!localStorage.getItem("nro_visited")) {
+      localStorage.setItem("nro_visited", "1");
+      fetch("/api/actions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "unique_visit" }),
+      }).catch(() => {});
+    }
   }, []);
 
   const recordAction = async (actionKey: string) => {
@@ -218,6 +244,7 @@ export default function Home() {
     setStats((prev) =>
       prev
         ? {
+            ...prev,
             actionTakers: isFirstAction
               ? prev.actionTakers + 1
               : prev.actionTakers,
@@ -232,6 +259,19 @@ export default function Home() {
         body: JSON.stringify({ action: actionKey, isFirstAction }),
       });
     } catch {}
+  };
+
+  const trackPlatformClick = (platform: "twitter" | "instagram" | "tiktok") => {
+    const key = `${platform}Clicks` as
+      | "twitterClicks"
+      | "instagramClicks"
+      | "tiktokClicks";
+    setStats((prev) => (prev ? { ...prev, [key]: prev[key] + 1 } : null));
+    fetch("/api/actions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: `platform_${platform}`, increment: true }),
+    }).catch(() => {});
   };
 
   const copyText = async (text: string, key: string) => {
@@ -302,23 +342,61 @@ export default function Home() {
             href="#what-can-we-do"
             className="border border-border px-6 py-3 text-sm tracking-wide hover:bg-white/5 transition"
           >
-            WHAT CAN WE DO
+            TAKE ACTION
           </a>
         </div>
 
         {stats !== null && (
-          <div className="flex gap-10 mt-10 text-sm text-muted">
+          <div className="grid grid-cols-2 gap-6 mt-10 pt-8 border-t border-border text-sm">
             <div>
-              <span className="block text-2xl md:text-3xl font-bold text-foreground">
-                {stats.actionTakers.toLocaleString()}
-              </span>
-              people took action
+              <p className="text-xs uppercase tracking-widest text-muted mb-3">
+                Website
+              </p>
+              <div className="space-y-1.5">
+                <div>
+                  <span className="text-2xl font-bold text-foreground">
+                    {stats.pageViews.toLocaleString()}
+                  </span>
+                  <span className="text-muted ml-2">page views</span>
+                </div>
+                <div>
+                  <span className="text-2xl font-bold text-foreground">
+                    {stats.uniqueVisitors.toLocaleString()}
+                  </span>
+                  <span className="text-muted ml-2">unique visitors</span>
+                </div>
+              </div>
             </div>
             <div>
-              <span className="block text-2xl md:text-3xl font-bold text-foreground">
-                {stats.totalActions.toLocaleString()}
-              </span>
-              actions recorded
+              <p className="text-xs uppercase tracking-widest text-muted mb-3">
+                Actions taken
+              </p>
+              <div className="space-y-1.5">
+                <div>
+                  <span className="text-2xl font-bold text-foreground">
+                    {stats.actionTakers.toLocaleString()}
+                  </span>
+                  <span className="text-muted ml-2">people acted</span>
+                </div>
+                <div>
+                  <span className="text-xl font-bold text-sky-400">
+                    {stats.twitterClicks.toLocaleString()}
+                  </span>
+                  <span className="text-muted ml-2">on Twitter/X</span>
+                </div>
+                <div>
+                  <span className="text-xl font-bold text-pink-400">
+                    {stats.instagramClicks.toLocaleString()}
+                  </span>
+                  <span className="text-muted ml-2">on Instagram</span>
+                </div>
+                <div>
+                  <span className="text-xl font-bold text-foreground">
+                    {stats.tiktokClicks.toLocaleString()}
+                  </span>
+                  <span className="text-muted ml-2">on TikTok</span>
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -741,6 +819,7 @@ export default function Home() {
                     href={tweetUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackPlatformClick("twitter")}
                     className="border border-sky-800 bg-sky-950/40 text-sky-300 px-4 py-2 text-sm hover:bg-sky-900/40 transition"
                   >
                     𝕏 Twitter (opens prefilled)
@@ -749,6 +828,7 @@ export default function Home() {
                     href={igUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackPlatformClick("instagram")}
                     className="border border-pink-800 bg-pink-950/40 text-pink-300 px-4 py-2 text-sm hover:bg-pink-900/40 transition"
                   >
                     Instagram
@@ -757,6 +837,7 @@ export default function Home() {
                     href={ttUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackPlatformClick("tiktok")}
                     className="border border-border text-muted px-4 py-2 text-sm hover:border-white/30 hover:text-foreground transition"
                   >
                     TikTok
@@ -1219,34 +1300,107 @@ export default function Home() {
 
       <div className="border-t border-border" />
 
-      {/* Subscribe */}
+      {/* Subscribe + Organize */}
       <section id="subscribe" className="px-6 py-20 max-w-3xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold mb-2">Stay updated</h2>
-        <p className="text-muted mb-6">
-          Subscribe to receive updates on sponsor responses, media coverage, and
-          coordination for the LA 2028 campaign.
-        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Stay updated */}
+          <div>
+            <h2 className="text-xl font-bold mb-2">Stay updated</h2>
+            <p className="text-muted text-sm mb-6 leading-relaxed">
+              Get updates on sponsor responses, media coverage, and the LA 2028
+              campaign.
+            </p>
+            {submitted ? (
+              <p className="text-accent font-bold text-sm">
+                Thank you. You&apos;re in.
+              </p>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-2">
+                <input
+                  type="email"
+                  required
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-accent"
+                />
+                <button
+                  type="submit"
+                  className="w-full bg-accent text-black font-bold px-6 py-3 text-sm tracking-wide hover:opacity-90 transition"
+                >
+                  SUBSCRIBE
+                </button>
+              </form>
+            )}
+          </div>
 
-        {submitted ? (
-          <p className="text-accent font-bold">Thank you. You&apos;re in.</p>
-        ) : (
-          <form onSubmit={handleSubmit} className="flex gap-2 max-w-md">
-            <input
-              type="email"
-              required
-              placeholder="your@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-accent"
-            />
-            <button
-              type="submit"
-              className="bg-accent text-black font-bold px-6 py-3 text-sm tracking-wide hover:opacity-90 transition"
-            >
-              SUBSCRIBE
-            </button>
-          </form>
-        )}
+          {/* Help organize */}
+          <div>
+            <h2 className="text-xl font-bold mb-2">
+              I want to help organize
+            </h2>
+            <p className="text-muted text-sm mb-6 leading-relaxed">
+              If you want an active role — translating content, tracking sponsor
+              responses, or coordinating outreach — we&apos;ll reach out with
+              instructions.
+            </p>
+            {orgSubmitted ? (
+              <p className="text-accent font-bold text-sm">
+                Got it. We&apos;ll be in touch.
+              </p>
+            ) : (
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  try {
+                    await fetch("/api/organize", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        email: orgEmail,
+                        why: orgWhy,
+                        social: orgSocial,
+                      }),
+                    });
+                  } catch {}
+                  setOrgSubmitted(true);
+                }}
+                className="space-y-2"
+              >
+                <textarea
+                  required
+                  placeholder="Why do you want to organize?"
+                  value={orgWhy}
+                  onChange={(e) => setOrgWhy(e.target.value)}
+                  rows={3}
+                  className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-accent resize-none"
+                />
+                <input
+                  type="url"
+                  required
+                  placeholder="Public social profile (LinkedIn, Twitter, Instagram…)"
+                  value={orgSocial}
+                  onChange={(e) => setOrgSocial(e.target.value)}
+                  className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-accent"
+                />
+                <input
+                  type="email"
+                  required
+                  placeholder="your@email.com"
+                  value={orgEmail}
+                  onChange={(e) => setOrgEmail(e.target.value)}
+                  className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-accent"
+                />
+                <button
+                  type="submit"
+                  className="w-full border border-border px-6 py-3 text-sm font-bold tracking-wide hover:border-accent hover:text-accent transition"
+                >
+                  SEND REQUEST
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
       </section>
 
       <div className="border-t border-border" />
