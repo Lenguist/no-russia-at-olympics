@@ -118,29 +118,34 @@ export default function Home() {
           <li>
             <strong className="text-foreground">Sep 27, 2025</strong> — IPC
             General Assembly voted 91-77 to lift Russia&apos;s suspension.
-            Full membership restored.
+            Full membership restored.{" "}
+            <a href="https://www.paralympic.org/news/ipc-general-assembly-votes-not-maintain-npc-russia-s-partial-suspension" className="text-accent underline text-xs" target="_blank" rel="noopener noreferrer">[source]</a>
           </li>
           <li>
             <strong className="text-foreground">Dec 2, 2025</strong> — Court of
             Arbitration for Sport overturned the ski federation&apos;s block on
-            Russian qualification.
+            Russian qualification.{" "}
+            <a href="https://www.tas-cas.org/en/news/CAS-confirms-appeal-by-Russian-Ski-Association" className="text-accent underline text-xs" target="_blank" rel="noopener noreferrer">[source]</a>
           </li>
           <li>
             <strong className="text-foreground">Feb 17, 2026</strong> — IPC
             confirmed 6 Russian and 4 Belarusian athletes will compete with
-            flag and anthem. First time since 2014.
+            flag and anthem. First time since 2014.{" "}
+            <a href="https://www.paralympic.org/news/update-potential-participation-npc-belarus-and-russia-milano-cortina-2026" className="text-accent underline text-xs" target="_blank" rel="noopener noreferrer">[source]</a>
           </li>
           <li>
             <strong className="text-foreground">Mar 6, 2026</strong> — Opening
-            ceremony in Verona. Russia walks in the parade of nations.
+            ceremony in Verona. Russia walks in the parade of nations.{" "}
+            <a href="https://www.paralympic.org/milano-cortina-2026" className="text-accent underline text-xs" target="_blank" rel="noopener noreferrer">[source]</a>
           </li>
         </ul>
 
         <h3 className="text-xl font-bold mt-12 mb-2">Who opposes it</h3>
         <p className="text-muted leading-relaxed">
-          Ukraine (official boycott), UK Sports Minister Lisa Nandy, EU
-          Commissioner Glenn Micallef (boycotting ceremony), Estonia, and a{" "}
-          <strong className="text-foreground">35-country coalition</strong>{" "}
+          <a href="https://www.nbcnews.com/world/ukraine/ukraine-boycott-winter-paralympics-russians-competing-flag-belarus-rcna259525" className="underline" target="_blank" rel="noopener noreferrer">Ukraine</a> (official boycott),{" "}
+          <a href="https://sports.yahoo.com/articles/government-hits-paralympics-allowing-brutal-222505359.html" className="underline" target="_blank" rel="noopener noreferrer">UK Sports Minister Lisa Nandy</a>,{" "}
+          <a href="https://www.euronews.com/my-europe/2026/02/18/eu-commissioner-boycotts-paralympics-opening-ceremony-over-russian-and-belarusian-flags" className="underline" target="_blank" rel="noopener noreferrer">EU Commissioner Glenn Micallef</a> (boycotting ceremony), Estonia, and a{" "}
+          <a href="https://valtioneuvosto.fi/en/-/1410845/sports-ministers-express-concern-over-ipc-decision-not-to-maintain-suspensions-on-russia-and-belarus-1" className="underline" target="_blank" rel="noopener noreferrer"><strong className="text-foreground">35-country coalition</strong></a>{" "}
           including France, Germany, Japan, Australia, Canada, and Italy.
         </p>
       </section>
@@ -168,11 +173,34 @@ export default function Home() {
           ))}
         </div>
 
-        <p className="text-muted text-sm mt-8">
-          Sources: Suspilne (Ukrainian public broadcaster), Vladyslav
-          Heraskevych (Ukrainian skeleton athlete), Russian media
-          self-reporting.
+        <p className="text-muted text-sm mt-8 mb-6">
+          Sources:{" "}
+          <a href="https://sportnews.24tv.ua/ru/paralimpiada-2026-sportsmeny-rossii-kotorye-srazhalis-protiv_n3011932" className="underline" target="_blank" rel="noopener noreferrer">24tv.ua / Suspilne</a>,{" "}
+          <a href="https://khpg.org/en/1608815528" className="underline" target="_blank" rel="noopener noreferrer">KHPG.org</a>,{" "}
+          <a href="https://society.comments.ua/news/warrussia/voennyh-kotorye-ubivali-ukraincev-pustili-na-paralimpiyskie-igry-2026-797825.html" className="underline" target="_blank" rel="noopener noreferrer">Comments.ua</a>,
+          Russian media self-reporting.
         </p>
+        <a
+          href="/dossier"
+          className="bg-accent text-black font-bold px-6 py-3 text-sm tracking-wide hover:opacity-90 transition inline-block"
+        >
+          READ FULL DOSSIER WITH SOURCES
+        </a>
+
+        <div className="bg-white/5 border border-border p-6 mt-10">
+          <h4 className="font-bold mb-2">The contrast</h4>
+          <p className="text-muted text-sm leading-relaxed">
+            Ukrainian skeleton athlete{" "}
+            <strong className="text-foreground">Vladyslav Heraskevych</strong>{" "}
+            was{" "}
+            <a href="https://sports.yahoo.com/articles/ukrainian-skeleton-racer-banned-olympics-153402286.html" className="underline" target="_blank" rel="noopener noreferrer">banned from the 2026 Winter Olympics</a>{" "}
+            for wearing a helmet honoring Ukrainian athletes killed by Russia.
+            The same Court of Arbitration for Sport that upheld his ban then
+            overturned the ski federation&apos;s block on Russian
+            qualification. A Ukrainian was banned for remembering the dead.
+            Russians are welcomed to compete under their flag.
+          </p>
+        </div>
       </section>
 
       <div className="border-t border-border" />
@@ -244,7 +272,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="bg-white/5 border border-border p-6 mt-4">
+        <div className="bg-white/5 border border-border p-6 mt-4 mb-8">
           <h4 className="font-bold mb-2">How to frame it</h4>
           <p className="text-muted text-sm leading-relaxed mb-2">
             <span className="text-red-400">Wrong:</span> &ldquo;Ban all
@@ -256,6 +284,13 @@ export default function Home() {
             with flags and anthems during an ongoing war.&rdquo;
           </p>
         </div>
+
+        <a
+          href="/action"
+          className="bg-accent text-black font-bold px-6 py-3 text-sm tracking-wide hover:opacity-90 transition inline-block"
+        >
+          DETAILED ACTION PLAN: WHO TO CONTACT, TEMPLATES, TIMELINE
+        </a>
       </section>
 
       <div className="border-t border-border" />
