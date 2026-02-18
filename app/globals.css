@@ -2,9 +2,9 @@
 
 :root {
   --background: #0a0a0a;
-  --foreground: #e5e5e5;
+  --foreground: #f0f0f0;
   --accent: #fbbf24;
-  --muted: #737373;
+  --muted: #a3a3a3;
   --border: #262626;
 }
 
@@ -20,4 +20,5 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
 }
