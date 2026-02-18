@@ -4,34 +4,54 @@ import { useState } from "react";
 
 const COMBATANTS = [
   {
-    name: "Vladislav Shynkar",
+    name: "Tsyden Geninov",
     detail:
-      "Fought against Ukraine since 2014 in Battalion 'Vostok.' Lost both legs in Donetsk region. Now on Russia's Paralympic fencing team.",
+      "Lieutenant in the 5th Guards Tank Brigade — the unit that committed atrocities in Bucha. Lost a leg. CISM World Champion 2025. Nominated for Russia's best athlete.",
+  },
+  {
+    name: "Denis Ishbulatov",
+    detail:
+      "Lt. Colonel, 106th Airborne Tula Division — participated in the offensive on Kyiv region. Also served in 104th Division, deployed in occupied Kherson. Russian Cup winner in shooting.",
+  },
+  {
+    name: "Ruslan Ustyuzhin",
+    detail:
+      "31st Airborne Brigade. Participated in the battle for Hostomel airport. Wounded near Popasna. Aiming for Paralympic sitting volleyball.",
+  },
+  {
+    name: "Vladislav Shinkar",
+    detail:
+      "Callsign 'Shiba.' Battalion 'Vostok' since 2014. Lost both legs at Donetsk Airport. On Russia's Paralympic fencing team.",
   },
   {
     name: "Nikolai Bondarenko",
     detail:
-      "Fought against Ukraine from the start of the full-scale invasion. Lost an arm near Popasna. Now competes in archery.",
+      "Volunteered in 2022. Lost an arm at Popasna. Champion of Russia in archery. Master of Sport (Feb 2026).",
   },
   {
-    name: "Tsyden Geninov",
+    name: "Anton Bushmakin",
     detail:
-      "Lieutenant in the 5th Guards Tank Brigade — the unit that advanced on Kyiv and committed atrocities against civilians. Lost a leg. Nominated for Russia's best Paralympic athlete of 2025.",
-  },
-  {
-    name: "Anton Bushmakov",
-    detail:
-      "Former marine and sapper. Lost both legs near Avdiivka. Now training for Paralympic kayaking.",
+      "Former marine and sapper. Volunteered for Ukraine war. Lost both legs near Avdiivka. Training for Paralympic kayaking.",
   },
   {
     name: "Rinat Vasiliev",
     detail:
-      "Fought against Ukraine for over 10 years. Lost both legs near Melitopol in 2022. Paralympic powerlifter training for the Games.",
+      "Served 10 years. Commanded ammunition convoys to the front. Lost both legs near Melitopol. Three-time Moscow powerlifting champion.",
+  },
+  {
+    name: "Ivan Shiryayev",
+    detail:
+      "Drafted 2022, commanded detachment in occupied Luhansk. Wounded near Bakhmut. In Russian para snowboard team reserve.",
   },
   {
     name: "Rustam Saifullin",
     detail:
-      "Colonel, engineer-sapper regiment commander. Fought in Chechnya, Syria, Georgia, and Ukraine. Spread propaganda about 'saving' occupied Ukrainian territories. Actively trains Russian Paralympic athletes.",
+      "Colonel, 'Hero of Russia.' Fought in Chechnya, Syria, Georgia, Ukraine. Major propaganda figure. Paralympic Committee ambassador.",
+  },
+  {
+    name: "Rostislav Kostenko",
+    detail:
+      "Callsign 'Cornet.' Drafted into 'Luhansk People's Army' in 2022. Served as grenade launcher. On reserve roster of Paralympic fencing team.",
   },
 ];
 
@@ -155,11 +175,21 @@ export default function Home() {
       {/* Combatant profiles */}
       <section id="who-they-send" className="px-6 py-20 max-w-3xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold mb-2">
-          Who Russia is sending
+          The 500 war veterans in Russian Paralympic sport
         </h2>
-        <p className="text-muted mb-8">
-          These are not just &ldquo;athletes from a country at war.&rdquo; These
-          are former combatants from the invasion of Ukraine.
+        <p className="text-muted mb-4">
+          The 6 athletes invited to the 2026 Games are not former military.
+          But the Russian Paralympic Committee president stated in his 2026
+          New Year&apos;s address that{" "}
+          <strong className="text-foreground">
+            ~500 war veterans are in Russian Paralympic teams
+          </strong>
+          . The following are in the broader team, reserves, and pipeline —
+          openly declaring Paralympic ambitions.
+        </p>
+        <p className="text-muted mb-8 text-sm">
+          Source:{" "}
+          <a href="https://suspilne.media/1243028-rosijski-sportsmeni-aki-vouvali-proti-ukraini-teper-maut-ambicii-na-ucast-u-paralimpiadi/" className="text-accent underline" target="_blank" rel="noopener noreferrer">Suspilne investigation</a> by Alla Sadovnyk &amp; Hanna Kalaur (Feb 18, 2026)
         </p>
 
         <div className="space-y-6">

@@ -1,26 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dossier — Who Russia Is Sending to the Paralympics",
+  title: "Dossier — Russian War Veterans in Paralympic Sport",
   description:
-    "Detailed, sourced profiles of Russian Paralympic athletes connected to military service in the invasion of Ukraine.",
+    "Sourced profiles of Russian athletes connected to military service in the invasion of Ukraine, compiled from the Suspilne investigation and public sources.",
 };
 
-const SOURCES = {
-  ipcAnnouncement:
-    "https://www.paralympic.org/news/update-potential-participation-npc-belarus-and-russia-milano-cortina-2026",
-  france24:
-    "https://www.france24.com/en/sport/20260217-paralympic-governing-body-lifts-ban-on-russian-and-belarusian-athletes-ahead-of-2026-games",
-  nbcUkraineBoycott:
-    "https://www.nbcnews.com/world/ukraine/ukraine-boycott-winter-paralympics-russians-competing-flag-belarus-rcna259525",
-  alJazeera:
-    "https://www.aljazeera.com/sports/2026/2/18/russian-belarusian-athletes-to-compete-under-own-flag-at-paralympics-2026",
-  khpg: "https://khpg.org/en/1608815528",
-  sportnews24tv:
-    "https://sportnews.24tv.ua/ru/paralimpiada-2026-sportsmeny-rossii-kotorye-srazhalis-protiv_n3011932",
-  commentsUa:
-    "https://society.comments.ua/news/warrussia/voennyh-kotorye-ubivali-ukraincev-pustili-na-paralimpiyskie-igry-2026-797825.html",
-};
+const SUSPILNE_URL =
+  "https://suspilne.media/1243028-rosijski-sportsmeni-aki-vouvali-proti-ukraini-teper-maut-ambicii-na-ucast-u-paralimpiadi/";
+const KHPG_URL = "https://khpg.org/en/1608815528";
 
 export default function DossierPage() {
   return (
@@ -31,552 +19,419 @@ export default function DossierPage() {
         </a>
 
         <h1 className="text-3xl md:text-5xl font-bold mt-8 mb-4">
-          Dossier: Who Russia is sending
+          Dossier: Russian war veterans in Paralympic sport
         </h1>
+
+        {/* Important clarification */}
+        <div className="bg-white/5 border border-border p-6 mb-8">
+          <h2 className="font-bold mb-2">Important clarification</h2>
+          <p className="text-muted text-sm leading-relaxed mb-3">
+            The Suspilne investigative editorial office confirmed that{" "}
+            <strong className="text-foreground">
+              none of the 6 Russian athletes invited to the 2026 Paralympics
+              are former military
+            </strong>
+            . However, the Russian Paralympic Committee president Pavel Rozhkov
+            stated in his 2026 New Year&apos;s address that{" "}
+            <strong className="text-foreground">
+              approximately 500 participants in the war against Ukraine
+            </strong>{" "}
+            are already part of Russian Paralympic teams. The athletes profiled
+            below are in the broader team, reserves, and pipeline — and they
+            openly declare ambitions to compete internationally.
+          </p>
+          <p className="text-muted text-sm leading-relaxed">
+            This is not about 6 athletes. This is about an institutional
+            program that channels war veterans into Paralympic sport as a
+            normalization tool.
+          </p>
+        </div>
+
         <p className="text-muted mb-4 leading-relaxed">
-          The following profiles are compiled from publicly available sources —
-          Russian state media interviews, Ukrainian investigative journalism
-          (Suspilne, 24tv.ua), Russian Paralympic Committee announcements, and
-          court documents. Every claim is linked to its source.
+          This dossier is based on the{" "}
+          <a
+            href={SUSPILNE_URL}
+            className="text-accent underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Suspilne investigative report
+          </a>{" "}
+          by Alla Sadovnyk and Hanna Kalaur (February 18, 2026), supplemented
+          with additional public sources. Every claim is linked.
         </p>
         <p className="text-muted mb-12 text-sm">
-          Primary Ukrainian investigation:{" "}
+          Additional sources:{" "}
           <a
-            href={SOURCES.sportnews24tv}
+            href={KHPG_URL}
             className="text-accent underline"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Sportnews 24tv.ua
+            KHPG.org (English)
           </a>{" "}
           |{" "}
           <a
-            href={SOURCES.khpg}
+            href="https://sport.nv.ua/ukr/olimpiada-2026/paralimpiada-2026-mpk-dopustiv-rosiyu-z-praporom-i-gimnom-sered-sportsmeniv-kolishni-viyskovi-50584100.html"
             className="text-accent underline"
             target="_blank"
             rel="noopener noreferrer"
           >
-            KHPG.org
-          </a>{" "}
-          |{" "}
-          <a
-            href={SOURCES.commentsUa}
-            className="text-accent underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Comments.ua
+            NV.ua
           </a>
         </p>
 
-        {/* Person 1 */}
-        <article className="mb-16">
-          <div className="border-l-2 border-accent pl-4 mb-4">
-            <h2 className="text-2xl font-bold">Vladislav Shinkar</h2>
-            <p className="text-muted text-sm">
-              Callsign &ldquo;Shiba&rdquo; &middot; Wheelchair Fencing &middot;
-              ~49 years old
-            </p>
-          </div>
-          <h3 className="font-bold mt-4 mb-1">Military service</h3>
-          <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
-            <li>
-              Joined armed militia in Donetsk in spring 2014, served in{" "}
-              <strong className="text-foreground">
-                Battalion &ldquo;Vostok&rdquo;
-              </strong>{" "}
-              — a Russian proxy formation in eastern Ukraine
-            </li>
-            <li>
-              Participated in the{" "}
-              <strong className="text-foreground">
-                Battle for Donetsk Airport
-              </strong>{" "}
-              (2014-2015)
-            </li>
-            <li>
-              Lost both legs in spring 2015 from an explosive device near
-              Donetsk Airport
-            </li>
-            <li>Discharged from &ldquo;DPR army&rdquo; in 2017</li>
-          </ul>
-          <h3 className="font-bold mt-4 mb-1">Paralympic career</h3>
-          <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
-            <li>
-              Began wheelchair fencing in 2017-2018 under coach Yulia Lysenko
-            </li>
-            <li>
-              Won gold in epee at Russia&apos;s internal &ldquo;Summer
-              Paralympic Games&rdquo; (held because Russia was banned from
-              official Paralympics)
-            </li>
-            <li>
-              Competes in 2025 Russian Championship for Omsk oblast team
-            </li>
-            <li>On Russian Paralympic fencing team candidate list</li>
-          </ul>
-          <h3 className="font-bold mt-4 mb-1">Propaganda</h3>
-          <p className="text-muted text-sm leading-relaxed">
-            In interviews with Russian media, spread the narrative that Ukrainian
-            defenders of Donetsk airport were killed by their own command — a
-            well-known Russian propaganda claim. Featured as an
-            &ldquo;inspirational hero of Donbas.&rdquo;
-          </p>
-          <div className="mt-3 text-xs text-muted">
-            Sources:{" "}
-            <a
-              href="https://aif.ru/sport/person/shiba_i_shpaga_vladislav_shinkar_lishilsya_obeih_nog_no_ostalsya_voinom"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              AIF.ru
-            </a>{" "}
-            |{" "}
-            <a
-              href="https://ukraina.ru/20221119/1040973957.html"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Ukraina.ru interview
-            </a>{" "}
-            |{" "}
-            <a
-              href="https://nashgorod.ru/news/2023-03-30/nikto-krome-nas-istoriya-desantnika-biznesmena-voennogo-i-paralimpiytsa-iz-donetska-2896608"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              NashGorod.ru
-            </a>{" "}
-            |{" "}
-            <a
-              href="https://www.wheelfencing.ru/cntnt/sorevnovaniya-1/n2025-5/rezultati-chempionata-rossii-872.html"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Wheelfencing.ru
-            </a>
-          </div>
-        </article>
+        {/* Person 1: Shinkar */}
+        <Person
+          name="Vladislav Shinkar"
+          subtitle='Callsign "Shiba" · Wheelchair Fencing · 49 years old'
+          military={[
+            'Went to fight against Ukraine in 2014. As Russian propagandists write, "he took the pain of Donbas as his own." Joined Battalion "Vostok" — a Russian proxy formation in eastern Ukraine.',
+            "Served first as machine gunner, then as battalion deputy commander for armament.",
+            "Wounded and lost both legs on April 12, 2015, in the village of Zhabunky, Donetsk region.",
+            'Continued service as deputy battalion commander for personnel work after prosthetics. Discharged to reserve in 2017.',
+          ]}
+          paralympic={[
+            "After retiring, took up wheelchair fencing.",
+            "2024: Included in Russian Paralympic team after taking 2nd place at Russian Championship (confirmed by RPC president Rozhkov).",
+            "Competes in 2025 Russian Championship for Omsk oblast team. On Russian Paralympic fencing team candidate list.",
+          ]}
+          quotes={[
+            '"Russia did everything right and on time because if Ukrainian troops had entered the territory of Donetsk, the city would have been wiped out."',
+            '"In the near future, you will see, the world will change and we will be present in international competitions. Those guys who defended their homeland at the front will defend the honor of Russia at international competitions." (December 3, 2025)',
+          ]}
+          sources={[
+            { label: "Suspilne investigation", url: SUSPILNE_URL },
+            {
+              label: "AIF.ru biography",
+              url: "https://aif.ru/sport/person/shiba_i_shpaga_vladislav_shinkar_lishilsya_obeih_nog_no_ostalsya_voinom",
+            },
+            {
+              label: "Ukraina.ru interview",
+              url: "https://ukraina.ru/20221119/1040973957.html",
+            },
+            {
+              label: "Wheelfencing.ru",
+              url: "https://www.wheelfencing.ru/cntnt/sorevnovaniya-1/n2025-5/rezultati-chempionata-rossii-872.html",
+            },
+          ]}
+        />
 
-        {/* Person 2 */}
-        <article className="mb-16">
-          <div className="border-l-2 border-accent pl-4 mb-4">
-            <h2 className="text-2xl font-bold">Nikolai Bondarenko</h2>
-            <p className="text-muted text-sm">
-              Archery &middot; Krasnodar Krai
-            </p>
-          </div>
-          <h3 className="font-bold mt-4 mb-1">Military service</h3>
-          <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
-            <li>
-              Volunteered at the start of the full-scale invasion (February
-              2022)
-            </li>
-            <li>
-              Lost an arm in combat near{" "}
-              <strong className="text-foreground">Popasna</strong> (Luhansk
-              oblast) — site of extremely heavy fighting in spring 2022
-            </li>
-          </ul>
-          <h3 className="font-bold mt-4 mb-1">Paralympic career</h3>
-          <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
-            <li>
-              2024: Won &ldquo;Cup of Defenders of the Fatherland&rdquo; in
-              archery
-            </li>
-            <li>
-              2025: <strong className="text-foreground">Champion of Russia</strong> in archery for athletes with
-              physical disabilities
-            </li>
-            <li>
-              2025: Laureate of &ldquo;Heroes of Our Time&rdquo; award by the
-              Russian Paralympic Committee
-            </li>
-            <li>
-              February 9, 2026: Awarded title of{" "}
-              <strong className="text-foreground">
-                Master of Sport of Russia
-              </strong>{" "}
-              by the Russian Paralympic Committee
-            </li>
-          </ul>
-          <div className="mt-3 text-xs text-muted">
-            Sources:{" "}
-            <a
-              href="https://paralymp.ru/press_center/news/official/09-02-2026-veteranu_svo_chempionu_rossii_po_strelbe_iz_luka_sporta_lits_s_poda_n_bondarenko_prisvoeno_zvanie_ma/"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Paralymp.ru (Feb 2026)
-            </a>{" "}
-            |{" "}
-            <a
-              href="https://paralymp.ru/press_center/news/sport/sport_lits_s_poda/strelba_iz_luka/02-07-2025-opredeleny_pobediteli_i_prizery_chempionata_rossii_po_strelbe_iz_luka_sporta_lits_s_poda_/"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Paralymp.ru Championship
-            </a>
-          </div>
-        </article>
+        {/* Person 2: Bondarenko */}
+        <Person
+          name="Nikolai Bondarenko"
+          subtitle="Archery · Krasnodar"
+          military={[
+            "Volunteered to fight against Ukraine in 2022.",
+            "In April 2022, during the battle for Popasna (Luhansk region), lost his right arm.",
+          ]}
+          quotes={[
+            '"I just could not imagine how one could stay away at such a time. I saw the reports from the front and rushed there to help the guys. This is not heroism; this is a simple desire to do something necessary, to contribute to the victory."',
+          ]}
+          paralympic={[
+            "February 2026: Became Master of Sport of Russia and winner of the all-Russian Defenders of the Fatherland Cup in archery.",
+            "2025: Champion of Russia in archery for athletes with physical disabilities.",
+            "Declared ambitions to participate in the Summer Paralympic Games.",
+          ]}
+          sources={[
+            { label: "Suspilne investigation", url: SUSPILNE_URL },
+            {
+              label: "Paralymp.ru (Feb 2026)",
+              url: "https://paralymp.ru/press_center/news/official/09-02-2026-veteranu_svo_chempionu_rossii_po_strelbe_iz_luka_sporta_lits_s_poda_n_bondarenko_prisvoeno_zvanie_ma/",
+            },
+          ]}
+        />
 
-        {/* Person 3 */}
-        <article className="mb-16">
-          <div className="border-l-2 border-accent pl-4 mb-4">
-            <h2 className="text-2xl font-bold">Tsyden Geninov</h2>
-            <p className="text-muted text-sm">
-              Lieutenant &middot; Archery &middot; Zabaykalsky Krai
-            </p>
-          </div>
-          <h3 className="font-bold mt-4 mb-1">Military service</h3>
-          <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
-            <li>
-              Lieutenant in the{" "}
+        {/* Person 3: Geninov */}
+        <Person
+          name="Tsyden Geninov"
+          subtitle="Lieutenant · Archery · 29 years old · Zabaykalsky Krai"
+          military={[
+            "Served in the Russian army since 2020. His contract was ending at the start of the full-scale invasion, but he was called to his unit and sent for training, then deployed to Ukraine.",
+            <>
+              Served in the{" "}
               <strong className="text-foreground">
                 5th Guards Tank Brigade
               </strong>{" "}
-              (military unit 46108), stationed near Ulan-Ude, Buryatia
-            </li>
-            <li>
+              (military unit 46108).{" "}
               <strong className="text-red-400">
-                This brigade is directly implicated in the Bucha massacre
-              </strong>{" "}
-              and atrocities in Irpin and Hostomel. Ukrainian authorities
-              published lists naming the 5th Separate Tank Brigade of the 36th
-              Army of the Eastern Military District among units responsible for
-              war crimes against civilians in the Kyiv region.
-            </li>
-            <li>Lost a leg during combat in Ukraine</li>
-            <li>Awarded the Order of Courage</li>
-          </ul>
-          <h3 className="font-bold mt-4 mb-1">Paralympic career</h3>
-          <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
-            <li>
-              Began archery in 2023 through the &ldquo;Defenders of the
-              Fatherland&rdquo; foundation
-            </li>
-            <li>
-              October 2025:{" "}
-              <strong className="text-foreground">CISM World Champion</strong>{" "}
-              in archery among military servicemen (Tehran) — 3 medals: gold
-              (individual), gold (mixed team), silver (team)
-            </li>
-            <li>February 2025: Awarded in the Kremlin Palace</li>
-            <li>Nominated for CISM Best Athlete of 2025</li>
-          </ul>
-          <h3 className="font-bold mt-4 mb-1">
-            About the 5th Guards Tank Brigade at Bucha
-          </h3>
-          <p className="text-muted text-sm leading-relaxed">
-            The brigade was deployed from Ulan-Ude to the Kyiv region at the
-            start of the full-scale invasion in February 2022. During the
-            occupation of Bucha (approximately March 5-31, 2022), Russian
-            forces conducted systematic killings of civilians, torture, sexual
-            violence, and looting. Commander: Colonel A. Kondrov.
-          </p>
-          <div className="mt-3 text-xs text-muted">
-            Sources:{" "}
-            <a
-              href="https://rsport.ria.ru/20251028/cism-2051073627.html"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              RIA Sport
-            </a>{" "}
-            |{" "}
-            <a
-              href="https://www.chita.ru/text/sport/2025/02/15/75113141/"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Chita.ru
-            </a>{" "}
-            |{" "}
-            <a
-              href="https://nv.ua/ukraine/events/izvesten-spisok-podrazdeleniy-rf-sovershavshih-uzhasnye-prestupleniya-v-buche-irpene-i-gostomele-arestovich-50230784.html"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              NV.ua (Bucha units list)
-            </a>{" "}
-            |{" "}
-            <a
-              href="https://www.svoboda.org/a/kto-v-otvete-za-ubiystva-v-buche-holodno-pustj-esche-polezhat/31785609.html"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Svoboda.org (Bucha investigation)
-            </a>
-          </div>
-        </article>
-
-        {/* Person 4 */}
-        <article className="mb-16">
-          <div className="border-l-2 border-accent pl-4 mb-4">
-            <h2 className="text-2xl font-bold">Anton Bushmakov</h2>
-            <p className="text-muted text-sm">
-              Former marine &amp; sapper &middot; Kayaking
-            </p>
-          </div>
-          <h3 className="font-bold mt-4 mb-1">Military service</h3>
-          <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
-            <li>Former marine (morpekh) and sapper</li>
-            <li>
-              Lost both legs near{" "}
-              <strong className="text-foreground">Avdiivka</strong> (Donetsk
-              oblast) — site of one of the most grinding Russian offensives
-            </li>
-          </ul>
-          <h3 className="font-bold mt-4 mb-1">Paralympic career</h3>
-          <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
-            <li>Took up kayaking/canoeing after rehabilitation</li>
-            <li>
-              January 2026: Reported to be actively preparing for the Paralympic
-              Games
-            </li>
-          </ul>
-          <div className="mt-3 text-xs text-muted">
-            Sources:{" "}
-            <a
-              href="https://sport.dialog.ua/328983_1771432432"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Dialog.UA
-            </a>{" "}
-            |{" "}
-            <a
-              href={SOURCES.sportnews24tv}
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              24tv.ua
-            </a>
-          </div>
-        </article>
-
-        {/* Person 5 */}
-        <article className="mb-16">
-          <div className="border-l-2 border-accent pl-4 mb-4">
-            <h2 className="text-2xl font-bold">Rinat Vasiliev</h2>
-            <p className="text-muted text-sm">
-              Powerlifter &middot; Moscow Paralympic team
-            </p>
-          </div>
-          <h3 className="font-bold mt-4 mb-1">Military service</h3>
-          <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
-            <li>
-              Fought against Ukraine{" "}
-              <strong className="text-foreground">since 2014</strong> — over 10
-              years of participation in the armed conflict
-            </li>
-            <li>
-              In March 2022, his unit was near{" "}
-              <strong className="text-foreground">Melitopol</strong>{" "}
-              (Zaporizhzhia oblast) when hit by a Ukrainian rocket strike
-            </li>
-            <li>Was in a coma for several days on the brink of death</li>
-            <li>Both legs amputated</li>
-            <li>Awarded Medal &ldquo;For Valour&rdquo;</li>
-          </ul>
-          <h3 className="font-bold mt-4 mb-1">Paralympic career</h3>
-          <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
-            <li>
-              February 2023: 1st place at Moscow Championship in powerlifting
-            </li>
-            <li>
-              April 2023: Debuted at Russian Championship as part of Moscow
-              team
-            </li>
-            <li>Member of Moscow Paralympic team in powerlifting</li>
-            <li>
-              As of March 2025: trains 3 times per week preparing for
-              Paralympics
-            </li>
-          </ul>
-          <div className="mt-3 text-xs text-muted">
-            Sources:{" "}
-            <a
-              href="https://rg.ru/2025/02/26/lishivshijsia-nog-na-svo-veteran-stal-chempionom-po-pauerliftingu.html"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Rossiyskaya Gazeta
-            </a>{" "}
-            |{" "}
-            <a
-              href={SOURCES.commentsUa}
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Comments.ua
-            </a>
-          </div>
-        </article>
-
-        {/* Person 6 */}
-        <article className="mb-16">
-          <div className="border-l-2 border-accent pl-4 mb-4">
-            <h2 className="text-2xl font-bold">Rustam Saifullin</h2>
-            <p className="text-muted text-sm">
-              Colonel &middot; &ldquo;Hero of Russia&rdquo; &middot; Born 1983
-            </p>
-          </div>
-          <h3 className="font-bold mt-4 mb-1">Military service</h3>
-          <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
-            <li>
-              <strong className="text-foreground">Colonel</strong>, commander of
-              the{" "}
-              <strong className="text-foreground">
-                40th Engineer-Sapper Regiment
-              </strong>{" "}
-              of the 41st Combined Arms Army
-            </li>
-            <li>
-              Wars: <strong className="text-foreground">Chechnya</strong>,{" "}
-              <strong className="text-foreground">Georgia</strong> (2008),{" "}
-              <strong className="text-foreground">Syria</strong>,{" "}
-              <strong className="text-foreground">Ukraine</strong> (from day
-              one of full-scale invasion)
-            </li>
-            <li>
-              Led regiment in advance on Chernihiv direction; personally
-              directed construction of crossings over the Desna River under
-              Ukrainian fire
-            </li>
-            <li>
-              Both legs destroyed by mortar fire; continued commanding regiment
-              for ~40 minutes while bleeding
-            </li>
-            <li>
-              Awarded{" "}
-              <strong className="text-foreground">
-                Hero of the Russian Federation
-              </strong>{" "}
-              by Putin; Gold Star pinned by Defense Minister Shoigu in hospital
-            </li>
-            <li>
-              After two severe woundings,{" "}
-              <strong className="text-foreground">
-                returned to the front in November 2023
+                This brigade participated in the offensive on Kyiv region and
+                its soldiers committed brutal war crimes against civilians in
+                Bucha, Irpin, and Hostomel.
               </strong>
-            </li>
-          </ul>
-          <h3 className="font-bold mt-4 mb-1">Propaganda activities</h3>
-          <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
-            <li>
-              One of the most prominent Russian war propaganda figures —
-              interviews in TASS, Rossiyskaya Gazeta, Izvestia, Komsomolskaya
-              Pravda
-            </li>
-            <li>
-              Spreads narratives about &ldquo;liberating&rdquo; Ukrainian
-              territories; claims residents thanked Russian soldiers for
-              &ldquo;saving them from Banderites&rdquo;
-            </li>
-            <li>
-              Claims Ukrainian forces disguise mines as children&apos;s toys
-            </li>
-            <li>
-              Tours Russian cities giving pro-war speeches to youth, cadets,
-              and police
-            </li>
-          </ul>
-          <h3 className="font-bold mt-4 mb-1">Connection to Paralympics</h3>
-          <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
-            <li>
-              Ambassador of &ldquo;We Are Together. Sport&rdquo; project by
-              the Russian Paralympic Committee
-            </li>
-            <li>
-              Champion of &ldquo;Cup of Defenders of the Fatherland&rdquo; in
-              table tennis; silver in powerlifting
-            </li>
-            <li>
-              Participates in Paralympic Committee outreach events for war
-              veterans
-            </li>
-            <li>
-              Not officially on team roster, but deeply embedded in the
-              Paralympic training infrastructure
-            </li>
-          </ul>
-          <div className="mt-3 text-xs text-muted">
-            Sources:{" "}
-            <a
-              href="https://ru.wikipedia.org/wiki/%D0%A1%D0%B0%D0%B9%D1%84%D1%83%D0%BB%D0%BB%D0%B8%D0%BD,_%D0%A0%D1%83%D1%81%D1%82%D0%B0%D0%BC_%D0%93%D0%B0%D0%BB%D0%B8%D0%B5%D0%B2%D0%B8%D1%87"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Wikipedia
-            </a>{" "}
-            |{" "}
-            <a
-              href="https://tass.ru/interviews/19093089"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              TASS interview
-            </a>{" "}
-            |{" "}
-            <a
-              href="https://www.tatar-inform.ru/news/geroi-rossii-rustam-saifullin-ya-ze-sibirskii-tatarin-s-detstva-priucen-k-trudu-5891000"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Tatar-Inform
-            </a>{" "}
-            |{" "}
-            <a
-              href="https://paralymp.ru/press_center/news/master_klassy_dlya_voennosluzhashchikh/12-03-2025-pkr_provel_paralimpiyskiy_urok_dlya_veteranov_svo_uchastnikov_zimnego_kubka_zashchitnikov_otechestva/"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Paralymp.ru
-            </a>
-          </div>
-        </article>
+            </>,
+            "Lost his right leg below the knee during the war. Does not publicly comment on circumstances.",
+          ]}
+          quotes={[
+            '"I did not particularly consider any other choice. Work is work." (on being sent to war)',
+          ]}
+          paralympic={[
+            "Began archery in 2023 through the Defenders of the Fatherland foundation.",
+            "October 2025: CISM World Champion in archery (Tehran) — gold (individual), gold (mixed team), silver (team).",
+            "February 2025: Awarded in the Kremlin Palace.",
+            "Nominated in Russia for best athlete of 2025.",
+          ]}
+          buchaNote
+          sources={[
+            { label: "Suspilne investigation", url: SUSPILNE_URL },
+            {
+              label: "RIA Sport (CISM)",
+              url: "https://rsport.ria.ru/20251028/cism-2051073627.html",
+            },
+            {
+              label: "Chita.ru",
+              url: "https://www.chita.ru/text/sport/2025/02/15/75113141/",
+            },
+            {
+              label: "NV.ua (Bucha units list)",
+              url: "https://nv.ua/ukraine/events/izvesten-spisok-podrazdeleniy-rf-sovershavshih-uzhasnye-prestupleniya-v-buche-irpene-i-gostomele-arestovich-50230784.html",
+            },
+            {
+              label: "Svoboda.org (Bucha)",
+              url: "https://www.svoboda.org/a/kto-v-otvete-za-ubiystva-v-buche-holodno-pustj-esche-polezhat/31785609.html",
+            },
+          ]}
+        />
 
+        {/* Person 4: Bushmakin */}
+        <Person
+          name="Anton Bushmakin"
+          subtitle="Former marine & sapper · Kayaking · 33 years old · Krasnodar region"
+          military={[
+            "Volunteered for the war against Ukraine and became a sapper.",
+            "In April 2023, wounded near Avdiivka (Donetsk region) while performing a combat mission. Lost both legs.",
+            "Awarded the 4th degree St. George Cross.",
+            "Makes propaganda statements claiming he was wounded by a French-made mine.",
+          ]}
+          quotes={[
+            '"As soon as the situation changes, I will be ready. I am ready to compete. Of course, under my flag, under the anthem, and to win these competitions. This is the goal: to get first place at the Paralympics." (January 2026, from documentary "Step Up")',
+          ]}
+          paralympic={[
+            "Currently in kayaking, member of Krasnodar region team for athletes with physical disabilities.",
+            "January 2026: Documentary made about him; states he is preparing for the Paralympics.",
+          ]}
+          sources={[
+            { label: "Suspilne investigation", url: SUSPILNE_URL },
+            {
+              label: "Dialog.UA",
+              url: "https://sport.dialog.ua/328983_1771432432",
+            },
+          ]}
+        />
+
+        {/* Person 5: Vasiliev */}
+        <Person
+          name="Rinat Vasiliev"
+          subtitle="Powerlifter · 31 years old · Moscow Paralympic team"
+          military={[
+            "Joined Russian army at 19 after graduating construction college. Served 10 years total.",
+            "In February 2022, his battalion (based in Stavropol) was sent to Crimea, then as part of the occupation forces to Melitopol.",
+            "Commanded convoys bringing ammunition to the front line.",
+            'Lost both legs near Melitopol on March 18, 2022. The "Peacemaker" database confirms this date.',
+          ]}
+          paralympic={[
+            "Three-time Moscow powerlifting champion.",
+            "Member of Moscow Paralympic team.",
+            "Speaker at \"Paralympic lessons\" for war participants.",
+            "As of March 2025, trains at least 3 times per week preparing for the Paralympic Games.",
+          ]}
+          extraNote='Has a YouTube channel featuring edited photos from his military career set to Putin&apos;s announcement of the "special military operation."'
+          sources={[
+            { label: "Suspilne investigation", url: SUSPILNE_URL },
+            {
+              label: "Rossiyskaya Gazeta",
+              url: "https://rg.ru/2025/02/26/lishivshijsia-nog-na-svo-veteran-stal-chempionom-po-pauerliftingu.html",
+            },
+          ]}
+        />
+
+        {/* Person 6: Shiryayev — NEW */}
+        <Person
+          name="Ivan Shiryayev"
+          subtitle="Para Snowboard · 41 years old · St. Petersburg · Team reserve"
+          military={[
+            "Before 2022, worked as a mechanical engineer at a soft drinks factory.",
+            "Drafted in autumn 2022 to a motorized brigade in occupied Luhansk region, where he commanded a detachment.",
+            "Wounded in autumn 2023 near Bakhmut. Leg amputated. Awarded the Zhukov medal.",
+          ]}
+          quotes={['"Dreams of participating in the Paralympics."']}
+          paralympic={[
+            "Began competing in winter 2025.",
+            "Won two bronze medals at the first stage of the Russian Para Snowboard Cup in late 2025.",
+            "Currently in the reserve of the Russian national team and member of St. Petersburg para snowboard team.",
+          ]}
+          sources={[
+            { label: "Suspilne investigation", url: SUSPILNE_URL },
+          ]}
+        />
+
+        {/* Person 7: Ustyuzhin — NEW */}
+        <Person
+          name="Ruslan Ustyuzhin"
+          subtitle="Sitting Volleyball · 39 years old · Tatarstan / Ulyanovsk"
+          military={[
+            <>
+              Served in Russian airborne troops since 2014. Member of the{" "}
+              <strong className="text-foreground">
+                31st Guards Airborne Assault Brigade
+              </strong>
+              .
+            </>,
+            <>
+              Information on Russian social networks indicates he{" "}
+              <strong className="text-red-400">
+                participated in the battle for Hostomel airport
+              </strong>{" "}
+              (Kyiv region, February 2022).
+            </>,
+            "In May 2022, during fighting near Popasna (Luhansk region), had his leg torn off by a shell.",
+            "After 6+ months of treatment, returned to serve in the airborne division in Ulyanovsk.",
+          ]}
+          paralympic={[
+            "February 2025: Stated he dreams of going to the Paralympic Games as part of the Russian sitting volleyball team.",
+          ]}
+          sources={[
+            { label: "Suspilne investigation", url: SUSPILNE_URL },
+          ]}
+        />
+
+        {/* Person 8: Ishbulatov — NEW */}
+        <Person
+          name="Denis Ishbulatov"
+          subtitle="Lt. Colonel · Bullseye Shooting · 45 years old · Tula region"
+          military={[
+            <>
+              Served in the{" "}
+              <strong className="text-foreground">
+                106th Guards Airborne Tula Division
+              </strong>
+              , which{" "}
+              <strong className="text-red-400">
+                participated in the offensive on Kyiv region
+              </strong>
+              .
+            </>,
+            "Also served in the 104th Airborne Assault Division, currently deployed in the temporarily occupied territory of Kherson region.",
+            "Wounded in April 2022; lost his right leg.",
+            "Currently serves at a regional military registration office.",
+          ]}
+          paralympic={[
+            "One of the leading shooters in Russia in the para category.",
+            "Russian Cup winner in bullseye shooting.",
+            'Propagandists claim "his sniper talent began to be revealed in all its glory" in this sport.',
+          ]}
+          sources={[
+            { label: "Suspilne investigation", url: SUSPILNE_URL },
+          ]}
+        />
+
+        {/* Person 9: Saifullin */}
+        <Person
+          name="Rustam Saifullin"
+          subtitle='Colonel · "Hero of Russia" · 40 years old · Tyumen'
+          military={[
+            "Commander of the 40th Engineer-Sapper Regiment of the 41st Army of the Central Military District.",
+            "20 years of military experience. Fought in Chechnya, Syria, Georgia, and Ukraine (from day one of full-scale invasion).",
+            "Lost both legs during the crossing of the Desna River. Applied tourniquet himself and continued commanding the crossing.",
+            "Hero of the Russian Federation — Gold Star pinned by Defense Minister Shoigu in hospital.",
+          ]}
+          quotes={[
+            "His propaganda video has gathered millions of views on YouTube, featuring a story about a resident of an occupied village who allegedly approached Saifullin to say that \"5 years before the full-scale invasion, their village was settled by Bandera followers who Ukrainized the village.\"",
+          ]}
+          paralympic={[
+            "Currently Deputy Head of the Tyumen Higher Military Engineering Command School.",
+            "Won the table tennis competition and silver in powerlifting at the interregional Defenders of the Fatherland Cup in 2023.",
+            "Ambassador of the Russian Paralympic Committee's \"We Are Together. Sport\" project.",
+          ]}
+          sources={[
+            { label: "Suspilne investigation", url: SUSPILNE_URL },
+            {
+              label: "Wikipedia",
+              url: "https://ru.wikipedia.org/wiki/%D0%A1%D0%B0%D0%B9%D1%84%D1%83%D0%BB%D0%BB%D0%B8%D0%BD,_%D0%A0%D1%83%D1%81%D1%82%D0%B0%D0%BC_%D0%93%D0%B0%D0%BB%D0%B8%D0%B5%D0%B2%D0%B8%D1%87",
+            },
+            {
+              label: "TASS interview",
+              url: "https://tass.ru/interviews/19093089",
+            },
+          ]}
+        />
+
+        {/* Person 10: Kostenko — NEW */}
+        <Person
+          name="Rostislav Kostenko"
+          subtitle='Callsign "Cornet" · Wheelchair Fencing · Luhansk'
+          military={[
+            "Before 2014, lived in Luhansk and competed in Ukrainian youth fencing championships (in Kharkiv, Kyiv, Khmelnytskyi, Lviv). Stayed in occupied Luhansk.",
+            'In 2022, drafted into the so-called "Luhansk People\'s Army." Served as a grenade launcher.',
+            "Suffered an injury that cost him his left foot and shin.",
+          ]}
+          paralympic={[
+            "Returned to fencing after injury.",
+            "March 2023: Included in the reserve roster of the Russian national Paralympic wheelchair fencing team.",
+          ]}
+          sources={[
+            { label: "Suspilne investigation", url: SUSPILNE_URL },
+          ]}
+        />
+
+        {/* Institutional context */}
         <div className="border-t border-border pt-8 mt-8">
           <h2 className="text-xl font-bold mb-4">
-            The Russian Paralympic Committee&apos;s own words
+            The institutional program
           </h2>
           <p className="text-muted text-sm leading-relaxed mb-4">
-            The president of the Russian Paralympic Committee has stated that
-            approximately{" "}
-            <strong className="text-foreground">
-              500 participants in the war against Ukraine
-            </strong>{" "}
-            are already part of Russia&apos;s Paralympic teams. This is not a
-            fringe phenomenon — it is an institutional program.
+            RPC President Pavel Rozhkov&apos;s own statements, documented by
+            Suspilne:
           </p>
-          <p className="text-muted text-sm leading-relaxed">
+          <ul className="text-muted text-sm space-y-3 leading-relaxed list-disc pl-5 mb-4">
+            <li>
+              <strong className="text-foreground">March 2023:</strong> At the
+              &ldquo;Return to Life&rdquo; award ceremony, stated that
+              Paralympic athletes &ldquo;together with the leadership of the
+              RPC, have been visiting patients of military hospitals and
+              participants in the special military operation.&rdquo;
+            </li>
+            <li>
+              <strong className="text-foreground">From 2024:</strong> Began
+              publicly stating that war veterans were being included in
+              Paralympic teams.
+            </li>
+            <li>
+              <strong className="text-foreground">
+                2026 New Year&apos;s address:
+              </strong>{" "}
+              Claimed{" "}
+              <strong className="text-foreground">
+                500 war veterans
+              </strong>{" "}
+              are now in Russian Paralympic teams.
+            </li>
+          </ul>
+          <p className="text-muted text-sm leading-relaxed mb-4">
+            Russia actively involves military personnel in sports through
+            special programs, contests, and competitions. The Russian
+            Paralympic Committee states that involving military personnel in
+            major sports is &ldquo;one of the most important and serious areas
+            of their activities.&rdquo;
+          </p>
+          <p className="text-muted text-sm">
             Source:{" "}
             <a
-              href={SOURCES.khpg}
+              href={SUSPILNE_URL}
               className="text-accent underline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              KHPG.org
+              Suspilne investigation (Ukrainian)
+            </a>{" "}
+            |{" "}
+            <a
+              href={KHPG_URL}
+              className="text-accent underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              KHPG.org (English)
             </a>
           </p>
         </div>
@@ -591,5 +446,98 @@ export default function DossierPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+function Person({
+  name,
+  subtitle,
+  military,
+  quotes,
+  paralympic,
+  buchaNote,
+  extraNote,
+  sources,
+}: {
+  name: string;
+  subtitle: string;
+  military: (string | React.ReactNode)[];
+  quotes?: string[];
+  paralympic: string[];
+  buchaNote?: boolean;
+  extraNote?: string;
+  sources: { label: string; url: string }[];
+}) {
+  return (
+    <article className="mb-16">
+      <div className="border-l-2 border-accent pl-4 mb-4">
+        <h2 className="text-2xl font-bold">{name}</h2>
+        <p className="text-muted text-sm">{subtitle}</p>
+      </div>
+
+      <h3 className="font-bold mt-4 mb-1">Military service</h3>
+      <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
+        {military.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
+
+      {quotes && quotes.length > 0 && (
+        <>
+          <h3 className="font-bold mt-4 mb-1">In their own words</h3>
+          {quotes.map((q, i) => (
+            <p
+              key={i}
+              className="text-muted text-sm leading-relaxed italic border-l border-muted pl-3 my-2"
+            >
+              {q}
+            </p>
+          ))}
+        </>
+      )}
+
+      <h3 className="font-bold mt-4 mb-1">Paralympic career</h3>
+      <ul className="text-muted text-sm space-y-1 leading-relaxed list-disc pl-5">
+        {paralympic.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
+
+      {buchaNote && (
+        <div className="bg-red-400/10 border border-red-400/30 p-4 mt-4">
+          <p className="text-sm leading-relaxed">
+            <strong className="text-red-400">About his unit:</strong> The 5th
+            Guards Tank Brigade was deployed from Ulan-Ude to the Kyiv region
+            in February 2022. During the occupation of Bucha (March 5-31,
+            2022), the brigade participated in systematic killings of
+            civilians, torture, sexual violence, and looting. Lt. Nikolai
+            Sokovikov of this brigade was convicted in absentia and sentenced
+            to life imprisonment for killing two unarmed civilians near Mriya
+            village, Bucha district.
+          </p>
+        </div>
+      )}
+
+      {extraNote && (
+        <p className="text-muted text-sm mt-3 italic">{extraNote}</p>
+      )}
+
+      <div className="mt-3 text-xs text-muted">
+        Sources:{" "}
+        {sources.map((s, i) => (
+          <span key={i}>
+            {i > 0 && " | "}
+            <a
+              href={s.url}
+              className="underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {s.label}
+            </a>
+          </span>
+        ))}
+      </div>
+    </article>
   );
 }
