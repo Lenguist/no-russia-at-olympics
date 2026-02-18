@@ -75,16 +75,114 @@ const COMBATANT_HIGHLIGHTS = [
   },
 ];
 
-const SPONSORS = [
-  "Visa",
-  "Coca-Cola",
-  "Samsung",
-  "Airbnb",
-  "Allianz",
-  "Procter & Gamble",
-  "Deloitte",
-  "Ottobock",
+const SPONSORS_DATA = [
+  {
+    name: "Visa",
+    key: "visa",
+    postName: "Visa",
+    twitterHandle: "Visa",
+    instagramHandle: "visa",
+    tiktokHandle: "visa",
+  },
+  {
+    name: "Coca-Cola",
+    key: "cocacola",
+    postName: "Coca-Cola",
+    twitterHandle: "CocaCola",
+    instagramHandle: "cocacola",
+    tiktokHandle: "cocacola",
+  },
+  {
+    name: "Samsung",
+    key: "samsung",
+    postName: "Samsung",
+    twitterHandle: "Samsung",
+    instagramHandle: "samsung",
+    tiktokHandle: "samsung",
+  },
+  {
+    name: "Airbnb",
+    key: "airbnb",
+    postName: "Airbnb",
+    twitterHandle: "Airbnb",
+    instagramHandle: "airbnb",
+    tiktokHandle: "airbnb",
+  },
+  {
+    name: "Allianz",
+    key: "allianz",
+    postName: "Allianz",
+    twitterHandle: "Allianz",
+    instagramHandle: "allianz",
+    tiktokHandle: "allianzgroup",
+  },
+  {
+    name: "P&G",
+    key: "pg",
+    postName: "Procter & Gamble",
+    twitterHandle: "ProcterGamble",
+    instagramHandle: "proctergamble",
+    tiktokHandle: "proctergamble",
+  },
+  {
+    name: "Deloitte",
+    key: "deloitte",
+    postName: "Deloitte",
+    twitterHandle: "Deloitte",
+    instagramHandle: "deloitte",
+    tiktokHandle: "deloitte",
+  },
+  {
+    name: "Ottobock",
+    key: "ottobock",
+    postName: "Ottobock",
+    twitterHandle: "ottobock",
+    instagramHandle: "ottobock",
+    tiktokHandle: "ottobock",
+  },
 ];
+
+const TIER2_ACTIONS = [
+  {
+    key: "emailed_sponsor",
+    label: "Email a sponsor directly",
+    desc: "Harder to ignore than a tweet. Use the contact form or PR email on the action page.",
+    href: "/action",
+    cta: "Get email template →",
+  },
+  {
+    key: "shared_dossier",
+    label: "Send the dossier to a journalist",
+    desc: "The combatant-athlete story is underreported in English-language media.",
+    href: "/dossier",
+    cta: "Open dossier →",
+  },
+  {
+    key: "emailed_committee",
+    label: "Email your national Paralympic committee",
+    desc: "The IPC vote was 91-77. National committee objections shift future votes.",
+    href: "/action",
+    cta: "Get committee contacts →",
+  },
+  {
+    key: "emailed_representative",
+    label: "Write to your MP / MEP / representative",
+    desc: "35 countries issued a joint statement. Push yours to go further.",
+    href: "/action",
+    cta: "Find your representative →",
+  },
+  {
+    key: "shared_community",
+    label: "Share in a group or community",
+    desc: "Forward this site to a Discord, Telegram group, WhatsApp, or email list.",
+    href: null,
+    cta: null,
+  },
+];
+
+function getPostText(postName: string, twitterHandle: string): string {
+  return `@${twitterHandle} — The 2026 Paralympics will feature Russian athletes competing under their national flag during an ongoing war. Russia's Paralympic president claims 500 war veterans are in their teams. Does ${postName} support this? no-russia-at-olympics.vercel.app`;
+}
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -94,6 +192,8 @@ export default function Home() {
     totalActions: number;
   } | null>(null);
   const [checkedActions, setCheckedActions] = useState<Set<string>>(new Set());
+  const [selectedSponsor, setSelectedSponsor] = useState<string | null>(null);
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   useEffect(() => {
     const saved: string[] = JSON.parse(
@@ -133,6 +233,21 @@ export default function Home() {
       });
     } catch {}
   };
+
+  const copyText = async (text: string, key: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedKey(key);
+      setTimeout(() => setCopiedKey(null), 2000);
+    } catch {}
+  };
+
+  const taggedSponsors = new Set(
+    SPONSORS_DATA.filter((s) => checkedActions.has(`tagged_${s.key}`)).map(
+      (s) => s.key
+    )
+  );
+  const tier2Unlocked = taggedSponsors.size >= 3;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -458,29 +573,9 @@ export default function Home() {
             </a>
           </div>
 
-          {/* Institutional program */}
-          <div className="bg-white/5 border border-border p-6">
-            <h3 className="font-bold mb-2">The institutional escalation</h3>
-            <ul className="text-muted text-sm space-y-2 leading-relaxed">
-              <li>
-                <strong className="text-foreground">March 2023:</strong> Rozhkov
-                stated Paralympic athletes were visiting military hospitals and
-                war participants.
-              </li>
-              <li>
-                <strong className="text-foreground">2024:</strong> Began publicly
-                including veterans in Paralympic teams.
-              </li>
-              <li>
-                <strong className="text-foreground">2026:</strong> Claims 500 war
-                veterans in teams. Calls it a key institutional priority.
-              </li>
-            </ul>
-          </div>
-
           {/* The contrast */}
-          <div className="bg-white/5 border border-border p-6">
-            <h3 className="font-bold mb-2">The contrast</h3>
+          <div className="border border-accent/40 bg-accent/5 p-6">
+            <h3 className="font-bold mb-2 text-accent">The hypocrisy</h3>
             <p className="text-muted text-sm leading-relaxed">
               Ukrainian skeleton athlete{" "}
               <strong className="text-foreground">
@@ -532,209 +627,238 @@ export default function Home() {
 
       <div className="border-t border-border" />
 
-      {/* What can we do */}
+      {/* Take Action */}
       <section id="what-can-we-do" className="px-6 py-20 max-w-3xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold mb-2">
-          What can we do
-        </h2>
-        <div className="bg-white/5 border border-border p-6 mb-8">
-          <h3 className="font-bold mb-2">Realistic goals</h3>
-          <p className="text-muted text-sm leading-relaxed">
-            The decision to allow Russia to compete is legally final (IPC General
-            Assembly vote + CAS ruling). Reversing it in the remaining days
-            before March 6 is unlikely. But we can{" "}
-            <strong className="text-foreground">
-              make this decision politically costly
-            </strong>{" "}
-            — so that full Russian reinstatement at LA 2028 becomes harder. In
-            2022, FIFA reversed its position on Russia in 4 days because
-            national teams refused to play. Reputational cost works.
-          </p>
+        <h2 className="text-2xl md:text-3xl font-bold mb-3">Take action</h2>
+        <p className="text-muted mb-8 leading-relaxed">
+          The most effective thing right now: publicly tag sponsors with a calm,
+          factual question. Companies escalate internally when tagged. Even one
+          sponsor reacting creates news.
+        </p>
+
+        {/* Progress bar */}
+        <div className="flex items-center gap-4 mb-8">
+          <div className="flex gap-1.5">
+            {SPONSORS_DATA.map((s) => (
+              <div
+                key={s.key}
+                className={`h-2 w-7 transition-colors ${
+                  taggedSponsors.has(s.key) ? "bg-accent" : "bg-border"
+                }`}
+              />
+            ))}
+          </div>
+          <span className="text-sm text-muted">
+            {taggedSponsors.size === 0
+              ? "Tag 3 sponsors to unlock more actions"
+              : taggedSponsors.size < 3
+              ? `${taggedSponsors.size}/3 — ${
+                  3 - taggedSponsors.size
+                } more to unlock next steps`
+              : `${taggedSponsors.size} sponsors tagged`}
+          </span>
         </div>
 
-        <div className="space-y-10">
-          <div>
-            <h3 className="text-xl font-bold mb-2">
-              1. Pressure the sponsors
-            </h3>
-            <p className="text-muted mb-4 leading-relaxed">
-              These companies fund the Paralympics. They react when tagged
-              publicly. Write a calm, factual post and tag them. Ask a question —
-              don&apos;t rant.
-            </p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {SPONSORS.map((s) => (
-                <span
-                  key={s}
-                  className="border border-border px-3 py-1 text-sm text-foreground"
-                >
-                  {s}
-                </span>
-              ))}
-            </div>
-            <div className="bg-white/5 border border-border p-4 text-sm text-muted">
-              <p className="italic">
-                &ldquo;@[Sponsor] — The 2026 Paralympics will feature athletes
-                competing under the Russian flag during an ongoing war of
-                aggression. Russia&apos;s own Paralympic president claims 500 war
-                veterans are in their teams. Does [Sponsor] support this? We
-                would welcome a public statement.&rdquo;
-              </p>
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-bold mb-2">
-              2. Contact your national Paralympic committee
-            </h3>
-            <p className="text-muted leading-relaxed">
-              National committees vote inside the IPC. Ask yours to publicly
-              oppose the reinstatement or demand neutral status (no flags, no
-              anthem). Internal dissent changes votes. The IPC General Assembly
-              was 91-77 — it was not a landslide.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-bold mb-2">
-              3. Write to elected representatives
-            </h3>
-            <p className="text-muted leading-relaxed">
-              Sports ministers intervene. Email your MP, MEP, or Congress member.
-              Ask them to issue a statement or raise a diplomatic objection. The{" "}
-              <a
-                href="https://valtioneuvosto.fi/en/-/1410845/sports-ministers-express-concern-over-ipc-decision-not-to-maintain-suspensions-on-russia-and-belarus-1"
-                className="text-accent underline"
-                target="_blank"
-                rel="noopener noreferrer"
+        {/* Sponsor grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
+          {SPONSORS_DATA.map((sponsor) => {
+            const tagged = taggedSponsors.has(sponsor.key);
+            const selected = selectedSponsor === sponsor.key;
+            return (
+              <button
+                key={sponsor.key}
+                onClick={() =>
+                  setSelectedSponsor(selected ? null : sponsor.key)
+                }
+                className={`border p-3 text-left transition ${
+                  tagged
+                    ? "border-green-500 bg-green-950/40 text-foreground"
+                    : selected
+                    ? "border-accent text-foreground"
+                    : "border-border text-muted hover:border-white/30 hover:text-foreground"
+                }`}
               >
-                35-country coalition
-              </a>{" "}
-              shows this channel works — push them to go further.
-            </p>
-          </div>
+                <span className="block font-bold text-sm">{sponsor.name}</span>
+                <span className="block text-xs mt-1 text-muted">
+                  {tagged ? "✓ tagged" : selected ? "open ↓" : "tap to tag →"}
+                </span>
+              </button>
+            );
+          })}
+        </div>
 
-          <div>
-            <h3 className="text-xl font-bold mb-2">4. Share the evidence</h3>
-            <p className="text-muted leading-relaxed">
-              The combatant-athlete story is underreported in English-language
-              media. Share the{" "}
-              <a href="/dossier" className="text-accent underline">
-                sourced dossier
-              </a>{" "}
-              with journalists and on social media. Journalists need documented
-              cases, not opinion — that&apos;s what we provide.
-            </p>
+        {/* Expanded sponsor panel */}
+        {selectedSponsor &&
+          (() => {
+            const sponsor = SPONSORS_DATA.find(
+              (s) => s.key === selectedSponsor
+            )!;
+            const postText = getPostText(sponsor.postName, sponsor.twitterHandle);
+            const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+              postText
+            )}`;
+            const igUrl = `https://www.instagram.com/${sponsor.instagramHandle}/`;
+            const ttUrl = `https://www.tiktok.com/@${sponsor.tiktokHandle}`;
+            const isDone = taggedSponsors.has(sponsor.key);
+
+            return (
+              <div className="border border-accent p-5 mt-2 mb-8">
+                <div className="flex items-center justify-between mb-5">
+                  <h3 className="font-bold">
+                    Tagging{" "}
+                    <span className="text-accent">{sponsor.name}</span>
+                  </h3>
+                  <button
+                    onClick={() => setSelectedSponsor(null)}
+                    className="text-muted text-sm hover:text-foreground transition"
+                  >
+                    close ✕
+                  </button>
+                </div>
+
+                <p className="text-xs text-muted uppercase tracking-widest mb-2">
+                  1. Copy this post
+                </p>
+                <div className="bg-white/5 border border-border p-4 mb-4 relative">
+                  <p className="text-sm leading-relaxed pr-20">{postText}</p>
+                  <button
+                    onClick={() => copyText(postText, sponsor.key)}
+                    className={`absolute top-3 right-3 text-xs font-bold px-3 py-1.5 transition ${
+                      copiedKey === sponsor.key
+                        ? "bg-green-600 text-white"
+                        : "bg-accent text-black hover:opacity-90"
+                    }`}
+                  >
+                    {copiedKey === sponsor.key ? "COPIED!" : "COPY"}
+                  </button>
+                </div>
+
+                <p className="text-xs text-muted uppercase tracking-widest mb-2">
+                  2. Post it on
+                </p>
+                <div className="flex gap-2 flex-wrap mb-5">
+                  <a
+                    href={tweetUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border border-sky-800 bg-sky-950/40 text-sky-300 px-4 py-2 text-sm hover:bg-sky-900/40 transition"
+                  >
+                    𝕏 Twitter (opens prefilled)
+                  </a>
+                  <a
+                    href={igUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border border-pink-800 bg-pink-950/40 text-pink-300 px-4 py-2 text-sm hover:bg-pink-900/40 transition"
+                  >
+                    Instagram
+                  </a>
+                  <a
+                    href={ttUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border border-border text-muted px-4 py-2 text-sm hover:border-white/30 hover:text-foreground transition"
+                  >
+                    TikTok
+                  </a>
+                </div>
+
+                <p className="text-xs text-muted uppercase tracking-widest mb-2">
+                  3. Mark as done
+                </p>
+                {isDone ? (
+                  <p className="text-green-400 text-sm font-bold">
+                    ✓ {sponsor.name} tagged
+                  </p>
+                ) : (
+                  <button
+                    onClick={() => {
+                      recordAction(`tagged_${sponsor.key}`);
+                      setSelectedSponsor(null);
+                    }}
+                    className="bg-accent text-black font-bold px-5 py-2.5 text-sm tracking-wide hover:opacity-90 transition"
+                  >
+                    DONE — MARK {sponsor.name.toUpperCase()} AS TAGGED
+                  </button>
+                )}
+              </div>
+            );
+          })()}
+
+        {/* Tier 2 */}
+        <div
+          className={`mt-4 transition-opacity ${
+            tier2Unlocked
+              ? ""
+              : "opacity-40 pointer-events-none select-none"
+          }`}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <h3 className="font-bold text-lg">More ways to apply pressure</h3>
+            {!tier2Unlocked && (
+              <span className="text-xs text-muted border border-border px-2 py-0.5">
+                unlocks after 3 sponsors
+              </span>
+            )}
+          </div>
+          <div className="space-y-2">
+            {TIER2_ACTIONS.map((action) => {
+              const done = checkedActions.has(action.key);
+              return (
+                <div
+                  key={action.key}
+                  className={`border p-4 flex gap-3 ${
+                    done ? "border-green-600/50" : "border-border"
+                  }`}
+                >
+                  <button
+                    onClick={() => recordAction(action.key)}
+                    className={`w-5 h-5 border flex-shrink-0 flex items-center justify-center text-xs font-bold mt-0.5 transition ${
+                      done
+                        ? "border-green-500 bg-green-500 text-black"
+                        : "border-border hover:border-white/40"
+                    }`}
+                  >
+                    {done ? "✓" : ""}
+                  </button>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-sm">{action.label}</p>
+                    <p className="text-muted text-sm mt-0.5">{action.desc}</p>
+                    {action.href && (
+                      <a
+                        href={action.href}
+                        className="text-accent text-sm underline mt-1 inline-block"
+                      >
+                        {action.cta}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        <div className="bg-white/5 border border-border p-6 mt-8 mb-6">
-          <h4 className="font-bold mb-2">How to frame it</h4>
-          <p className="text-muted text-sm leading-relaxed mb-2">
-            <span className="text-red-400">Wrong:</span> &ldquo;Ban all Russians
-            from sport.&rdquo;
+        {/* Framing note */}
+        <div className="bg-white/5 border border-border p-5 mt-10 text-sm">
+          <p className="mb-2 text-muted">
+            <span className="text-red-400 font-bold">Not this:</span>{" "}
+            &ldquo;Ban all Russians from sport.&rdquo;
           </p>
-          <p className="text-muted text-sm leading-relaxed">
-            <span className="text-green-400">Right:</span> &ldquo;A country
-            waging a war of aggression should not parade under its flag and
-            anthem at the Paralympics. National symbols reward the state, not the
-            athletes.&rdquo;
+          <p className="text-muted">
+            <span className="text-green-400 font-bold">Say this:</span>{" "}
+            &ldquo;A country waging a war of aggression should not parade under
+            its flag and anthem at the Paralympics. National symbols reward the
+            state, not the athletes.&rdquo;
           </p>
         </div>
 
         <a
           href="/action"
-          className="bg-accent text-black font-bold px-6 py-3 text-sm tracking-wide hover:opacity-90 transition inline-block"
+          className="mt-8 inline-block border border-border px-5 py-2.5 text-sm text-muted hover:text-foreground hover:border-white/30 transition"
         >
-          DETAILED ACTION PLAN: CONTACTS, TEMPLATES, TIMELINE
+          Full action plan: contacts, templates, timeline &rarr;
         </a>
-      </section>
-
-      <div className="border-t border-border" />
-
-      {/* Action Tracker */}
-      <section id="track-actions" className="px-6 py-20 max-w-3xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold mb-2">
-          Record what you&apos;ve done
-        </h2>
-        <p className="text-muted mb-8 leading-relaxed">
-          Check off actions as you take them. Your progress is saved in your
-          browser and counted in the totals above.
-        </p>
-
-        <div className="space-y-8">
-          <ChecklistGroup
-            title="Social media"
-            items={[
-              { key: "tagged_visa_twitter", label: "Tagged Visa on Twitter/X" },
-              {
-                key: "tagged_cocacola_twitter",
-                label: "Tagged Coca-Cola on Twitter/X",
-              },
-              {
-                key: "tagged_samsung_twitter",
-                label: "Tagged Samsung on Twitter/X",
-              },
-              {
-                key: "tagged_airbnb_twitter",
-                label: "Tagged Airbnb on Twitter/X",
-              },
-              {
-                key: "tagged_allianz_twitter",
-                label: "Tagged Allianz on Twitter/X",
-              },
-              {
-                key: "tagged_sponsor_instagram",
-                label: "Tagged a sponsor on Instagram",
-              },
-              {
-                key: "tagged_sponsor_tiktok",
-                label: "Tagged a sponsor on TikTok",
-              },
-              { key: "shared_site", label: "Shared the site" },
-            ]}
-            checked={checkedActions}
-            onCheck={recordAction}
-          />
-          <ChecklistGroup
-            title="Direct contact"
-            items={[
-              { key: "emailed_sponsor", label: "Emailed a sponsor" },
-              {
-                key: "emailed_committee",
-                label: "Emailed national Paralympic committee",
-              },
-              {
-                key: "emailed_representative",
-                label: "Emailed MP / MEP / representative",
-              },
-            ]}
-            checked={checkedActions}
-            onCheck={recordAction}
-          />
-          <ChecklistGroup
-            title="Amplification"
-            items={[
-              {
-                key: "contacted_journalist",
-                label: "Sent to a journalist or media contact",
-              },
-              {
-                key: "shared_community",
-                label: "Shared in a group chat or community",
-              },
-            ]}
-            checked={checkedActions}
-            onCheck={recordAction}
-          />
-        </div>
-
-        {checkedActions.size > 0 && (
-          <p className="text-accent text-sm mt-8 font-bold">
-            You&apos;ve recorded {checkedActions.size} action
-            {checkedActions.size !== 1 ? "s" : ""}. Thank you.
-          </p>
-        )}
       </section>
 
       <div className="border-t border-border" />
@@ -1138,50 +1262,5 @@ export default function Home() {
         </p>
       </footer>
     </main>
-  );
-}
-
-function ChecklistGroup({
-  title,
-  items,
-  checked,
-  onCheck,
-}: {
-  title: string;
-  items: { key: string; label: string }[];
-  checked: Set<string>;
-  onCheck: (key: string) => void;
-}) {
-  return (
-    <div>
-      <h3 className="font-bold text-xs uppercase tracking-widest text-muted mb-3">
-        {title}
-      </h3>
-      <div className="space-y-2">
-        {items.map((item) => {
-          const done = checked.has(item.key);
-          return (
-            <button
-              key={item.key}
-              onClick={() => onCheck(item.key)}
-              className={`flex items-center gap-3 w-full text-left text-sm py-2 px-3 border transition ${
-                done
-                  ? "border-accent text-foreground"
-                  : "border-border text-muted hover:border-white/30"
-              }`}
-            >
-              <span
-                className={`w-4 h-4 border flex-shrink-0 flex items-center justify-center text-xs font-bold ${
-                  done ? "border-accent bg-accent text-black" : "border-border"
-                }`}
-              >
-                {done ? "✓" : ""}
-              </span>
-              {item.label}
-            </button>
-          );
-        })}
-      </div>
-    </div>
   );
 }
