@@ -2,56 +2,76 @@
 
 import { useState } from "react";
 
-const COMBATANTS = [
+const RUSSIAN_ATHLETES = [
+  {
+    name: "Alexei Bugaev",
+    sport: "Para Alpine Skiing (LW6/8)",
+    detail:
+      "Born 1997, Krasnoyarsk. Missing four fingers on right hand. 3-time Paralympic champion — won 5 medals at Sochi 2014 (2 gold, 2 silver, 1 bronze) at age 16. World Athlete of the Year 2018. Received state decorations from Putin after Beijing 2022.",
+    profileUrl: "https://www.paralympic.org/aleksei-bugaev",
+  },
+  {
+    name: "Varvara Voronchikhina",
+    sport: "Para Alpine Skiing",
+    detail:
+      "Born 2002. 2-time World Champion. Won IPC World Cup overall standings. Received state award from Putin in April 2022 — weeks after the Bucha massacre. Named Female Athlete of the Year at 2022 Russian National Sports Awards.",
+    profileUrl: "https://www.paralympic.org/varvara-voronchikhina",
+  },
+  {
+    name: "Ivan Golubkov",
+    sport: "Para Cross-Country Skiing & Biathlon",
+    detail:
+      "Multiple World Champion. 3 Crystal Globes in cross-country, 2 in biathlon. Became World Cup champion at 18, Crystal Globe winner at 20. Missed Sochi 2014 and couldn't qualify for PyeongChang 2018 due to Russia's suspension.",
+    profileUrl:
+      "https://www.paralympic.org/feature/ivan-golubkov-proves-home-training-can-make-champion",
+  },
+  {
+    name: "Anastasia Bagiyan",
+    sport: "Para Cross-Country Skiing (with guide Sergei Sinyakin)",
+    detail: "World Championship medalist in para cross-country skiing.",
+  },
+  {
+    name: "Dmitry Fadeev",
+    sport: "Para Snowboard",
+    detail: "Russian para snowboarder selected via bipartite invitation.",
+  },
+  {
+    name: "Philipp Shebbo",
+    sport: "Para Snowboard",
+    detail:
+      "Russian champion and European champion. Lost his leg in a car accident approximately 13 years ago. Designs custom prosthetic limbs for snowboarding using carbon fiber and titanium alloy.",
+    profileUrl:
+      "https://news.cgtn.com/news/2024-10-18/Russian-para-snowboarding-champ-enhances-sports-prosthetics-1xNN9xSuRKU/p.html",
+  },
+];
+
+const BELARUSIAN_ATHLETES = [
+  { name: "Valentina Birilo", sport: "Para Cross-Country Skiing" },
+  { name: "Lidiya Loban", sport: "Para Cross-Country Skiing" },
+  { name: "Darya Fedkovich", sport: "Para Cross-Country Skiing" },
+  { name: "Roman Sviridenko", sport: "Para Cross-Country Skiing" },
+];
+
+const COMBATANT_HIGHLIGHTS = [
   {
     name: "Tsyden Geninov",
     detail:
-      "Lieutenant in the 5th Guards Tank Brigade — the unit that committed atrocities in Bucha. Lost a leg. CISM World Champion 2025. Nominated for Russia's best athlete.",
+      "Lieutenant, 5th Guards Tank Brigade — the unit that committed atrocities in Bucha. CISM World Champion 2025. Nominated for Russia's best athlete.",
   },
   {
     name: "Denis Ishbulatov",
     detail:
-      "Lt. Colonel, 106th Airborne Tula Division — participated in the offensive on Kyiv region. Also served in 104th Division, deployed in occupied Kherson. Russian Cup winner in shooting.",
-  },
-  {
-    name: "Ruslan Ustyuzhin",
-    detail:
-      "31st Airborne Brigade. Participated in the battle for Hostomel airport. Wounded near Popasna. Aiming for Paralympic sitting volleyball.",
-  },
-  {
-    name: "Vladislav Shinkar",
-    detail:
-      "Callsign 'Shiba.' Battalion 'Vostok' since 2014. Lost both legs at Donetsk Airport. On Russia's Paralympic fencing team.",
-  },
-  {
-    name: "Nikolai Bondarenko",
-    detail:
-      "Volunteered in 2022. Lost an arm at Popasna. Champion of Russia in archery. Master of Sport (Feb 2026).",
+      "Lt. Colonel, 106th Airborne Tula Division — participated in the offensive on Kyiv region. Russian Cup winner in shooting.",
   },
   {
     name: "Anton Bushmakin",
     detail:
-      "Former marine and sapper. Volunteered for Ukraine war. Lost both legs near Avdiivka. Training for Paralympic kayaking.",
+      'Former marine, wounded near Avdiivka. Said in January 2026: "I am ready to compete under my flag, under the anthem, and to win. This is the goal: to get first place at the Paralympics."',
   },
   {
-    name: "Rinat Vasiliev",
+    name: "Ruslan Ustyuzhin",
     detail:
-      "Served 10 years. Commanded ammunition convoys to the front. Lost both legs near Melitopol. Three-time Moscow powerlifting champion.",
-  },
-  {
-    name: "Ivan Shiryayev",
-    detail:
-      "Drafted 2022, commanded detachment in occupied Luhansk. Wounded near Bakhmut. In Russian para snowboard team reserve.",
-  },
-  {
-    name: "Rustam Saifullin",
-    detail:
-      "Colonel, 'Hero of Russia.' Fought in Chechnya, Syria, Georgia, Ukraine. Major propaganda figure. Paralympic Committee ambassador.",
-  },
-  {
-    name: "Rostislav Kostenko",
-    detail:
-      "Callsign 'Cornet.' Drafted into 'Luhansk People's Army' in 2022. Served as grenade launcher. On reserve roster of Paralympic fencing team.",
+      "31st Airborne Brigade. Participated in the battle for Hostomel airport. Aiming for Paralympic sitting volleyball.",
   },
 ];
 
@@ -98,220 +118,466 @@ export default function Home() {
       {/* Hero */}
       <section className="px-6 py-20 md:py-32 max-w-3xl mx-auto">
         <p className="text-accent font-bold tracking-widest uppercase text-sm mb-4">
-          Paralympics 2026 &middot; Milan
+          Milano-Cortina 2026 &middot; March 6-15
         </p>
         <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-          Russia does not belong at the Paralympics.
+          Russia is returning to the Paralympics under its flag.
         </h1>
         <p className="text-lg md:text-xl text-muted leading-relaxed mb-8">
-          On February 17, 2026, the International Paralympic Committee gave six
-          Russian and four Belarusian athletes wild-card slots to compete under
-          their national flags at the Winter Paralympics. The war against Ukraine
-          is ongoing. Among the delegation are{" "}
+          For the first time since 2014, Russian athletes will compete under the
+          Russian flag and anthem at the Winter Paralympics. The war against
+          Ukraine is ongoing. Among Russia&apos;s broader Paralympic teams are{" "}
           <strong className="text-foreground">
-            former soldiers who fought in the invasion
+            approximately 500 war veterans
           </strong>
-          . This is not sport — this is normalization.
+          , including soldiers from units linked to the Bucha massacre.
         </p>
         <div className="flex gap-4 flex-wrap">
           <a
-            href="#take-action"
+            href="#what-is-happening"
             className="bg-accent text-black font-bold px-6 py-3 text-sm tracking-wide hover:opacity-90 transition"
           >
-            TAKE ACTION
+            READ THE FACTS
           </a>
           <a
-            href="#the-facts"
+            href="#what-can-we-do"
             className="border border-border px-6 py-3 text-sm tracking-wide hover:bg-white/5 transition"
           >
-            READ THE FACTS
+            WHAT CAN WE DO
           </a>
         </div>
       </section>
 
       <div className="border-t border-border" />
 
-      {/* Facts */}
-      <section id="the-facts" className="px-6 py-20 max-w-3xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4">What happened</h2>
-        <ul className="space-y-4 text-muted leading-relaxed">
+      {/* What is happening */}
+      <section id="what-is-happening" className="px-6 py-20 max-w-3xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          What is happening
+        </h2>
+
+        <ul className="space-y-4 text-muted leading-relaxed mb-10">
           <li>
             <strong className="text-foreground">Sep 27, 2025</strong> — IPC
-            General Assembly voted 91-77 to lift Russia&apos;s suspension.
-            Full membership restored.{" "}
-            <a href="https://www.paralympic.org/news/ipc-general-assembly-votes-not-maintain-npc-russia-s-partial-suspension" className="text-accent underline text-xs" target="_blank" rel="noopener noreferrer">[source]</a>
+            General Assembly voted 91-77 to lift Russia&apos;s suspension. Full
+            membership restored.{" "}
+            <a
+              href="https://www.paralympic.org/news/ipc-general-assembly-votes-not-maintain-npc-russia-s-partial-suspension"
+              className="text-accent underline text-xs"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              [source]
+            </a>
           </li>
           <li>
             <strong className="text-foreground">Dec 2, 2025</strong> — Court of
             Arbitration for Sport overturned the ski federation&apos;s block on
             Russian qualification.{" "}
-            <a href="https://www.tas-cas.org/en/news/CAS-confirms-appeal-by-Russian-Ski-Association" className="text-accent underline text-xs" target="_blank" rel="noopener noreferrer">[source]</a>
+            <a
+              href="https://www.tas-cas.org/en/news/CAS-confirms-appeal-by-Russian-Ski-Association"
+              className="text-accent underline text-xs"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              [source]
+            </a>
           </li>
           <li>
             <strong className="text-foreground">Feb 17, 2026</strong> — IPC
-            confirmed 6 Russian and 4 Belarusian athletes will compete with
-            flag and anthem. First time since 2014.{" "}
-            <a href="https://www.paralympic.org/news/update-potential-participation-npc-belarus-and-russia-milano-cortina-2026" className="text-accent underline text-xs" target="_blank" rel="noopener noreferrer">[source]</a>
+            confirmed{" "}
+            <strong className="text-foreground">
+              6 Russian and 4 Belarusian athletes
+            </strong>{" "}
+            will compete with flag and anthem via bipartite invitations.{" "}
+            <a
+              href="https://www.paralympic.org/news/update-potential-participation-npc-belarus-and-russia-milano-cortina-2026"
+              className="text-accent underline text-xs"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              [source]
+            </a>
           </li>
           <li>
             <strong className="text-foreground">Mar 6, 2026</strong> — Opening
-            ceremony in Verona. Russia walks in the parade of nations.{" "}
-            <a href="https://www.paralympic.org/milano-cortina-2026" className="text-accent underline text-xs" target="_blank" rel="noopener noreferrer">[source]</a>
+            ceremony in Verona. Russia walks in the parade of nations with its
+            flag for the first time since Sochi 2014.{" "}
+            <a
+              href="https://www.paralympic.org/milano-cortina-2026"
+              className="text-accent underline text-xs"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              [source]
+            </a>
           </li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-12 mb-2">Who opposes it</h3>
-        <p className="text-muted leading-relaxed">
-          <a href="https://www.nbcnews.com/world/ukraine/ukraine-boycott-winter-paralympics-russians-competing-flag-belarus-rcna259525" className="underline" target="_blank" rel="noopener noreferrer">Ukraine</a> (official boycott),{" "}
-          <a href="https://sports.yahoo.com/articles/government-hits-paralympics-allowing-brutal-222505359.html" className="underline" target="_blank" rel="noopener noreferrer">UK Sports Minister Lisa Nandy</a>,{" "}
-          <a href="https://www.euronews.com/my-europe/2026/02/18/eu-commissioner-boycotts-paralympics-opening-ceremony-over-russian-and-belarusian-flags" className="underline" target="_blank" rel="noopener noreferrer">EU Commissioner Glenn Micallef</a> (boycotting ceremony), Estonia, and a{" "}
-          <a href="https://valtioneuvosto.fi/en/-/1410845/sports-ministers-express-concern-over-ipc-decision-not-to-maintain-suspensions-on-russia-and-belarus-1" className="underline" target="_blank" rel="noopener noreferrer"><strong className="text-foreground">35-country coalition</strong></a>{" "}
-          including France, Germany, Japan, Australia, Canada, and Italy.
-        </p>
+        <div className="bg-white/5 border border-border p-6 mb-10">
+          <h3 className="font-bold mb-2">Who opposes it</h3>
+          <p className="text-muted leading-relaxed text-sm">
+            <a
+              href="https://www.nbcnews.com/world/ukraine/ukraine-boycott-winter-paralympics-russians-competing-flag-belarus-rcna259525"
+              className="underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ukraine
+            </a>{" "}
+            (official boycott),{" "}
+            <a
+              href="https://sports.yahoo.com/articles/government-hits-paralympics-allowing-brutal-222505359.html"
+              className="underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              UK Sports Minister Lisa Nandy
+            </a>
+            ,{" "}
+            <a
+              href="https://www.euronews.com/my-europe/2026/02/18/eu-commissioner-boycotts-paralympics-opening-ceremony-over-russian-and-belarusian-flags"
+              className="underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              EU Commissioner Glenn Micallef
+            </a>{" "}
+            (boycotting ceremony), Estonia, and a{" "}
+            <a
+              href="https://valtioneuvosto.fi/en/-/1410845/sports-ministers-express-concern-over-ipc-decision-not-to-maintain-suspensions-on-russia-and-belarus-1"
+              className="underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <strong className="text-foreground">
+                35-country coalition
+              </strong>
+            </a>{" "}
+            including France, Germany, Japan, Australia, Canada, and Italy.
+          </p>
+        </div>
       </section>
 
       <div className="border-t border-border" />
 
-      {/* Combatant profiles */}
-      <section id="who-they-send" className="px-6 py-20 max-w-3xl mx-auto">
+      {/* The 6 Russian athletes */}
+      <section id="the-athletes" className="px-6 py-20 max-w-3xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold mb-2">
-          The 500 war veterans in Russian Paralympic sport
+          The 6 Russian athletes invited
         </h2>
-        <p className="text-muted mb-4">
-          The 6 athletes invited to the 2026 Games are not former military.
-          But the Russian Paralympic Committee president stated in his 2026
-          New Year&apos;s address that{" "}
-          <strong className="text-foreground">
-            ~500 war veterans are in Russian Paralympic teams
-          </strong>
-          . The following are in the broader team, reserves, and pipeline —
-          openly declaring Paralympic ambitions.
-        </p>
         <p className="text-muted mb-8 text-sm">
-          Source:{" "}
-          <a href="https://suspilne.media/1243028-rosijski-sportsmeni-aki-vouvali-proti-ukraini-teper-maut-ambicii-na-ucast-u-paralimpiadi/" className="text-accent underline" target="_blank" rel="noopener noreferrer">Suspilne investigation</a> by Alla Sadovnyk &amp; Hanna Kalaur (Feb 18, 2026)
+          These athletes received bipartite invitations to compete in alpine
+          skiing, cross-country skiing, and snowboard. None are former military.{" "}
+          <a
+            href="https://tass.com/sports/2087843"
+            className="text-accent underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            TASS source
+          </a>
         </p>
 
-        <div className="space-y-6">
-          {COMBATANTS.map((person) => (
-            <div key={person.name} className="border-l-2 border-accent pl-4">
-              <h3 className="font-bold text-lg">{person.name}</h3>
+        <div className="space-y-6 mb-10">
+          {RUSSIAN_ATHLETES.map((athlete) => (
+            <div key={athlete.name} className="border-l-2 border-accent pl-4">
+              <h3 className="font-bold text-lg">
+                {athlete.name}
+                {athlete.profileUrl && (
+                  <a
+                    href={athlete.profileUrl}
+                    className="text-accent text-xs ml-2 underline font-normal"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    profile
+                  </a>
+                )}
+              </h3>
+              <p className="text-muted text-xs mb-1">{athlete.sport}</p>
               <p className="text-muted text-sm leading-relaxed">
-                {person.detail}
+                {athlete.detail}
               </p>
             </div>
           ))}
         </div>
 
-        <p className="text-muted text-sm mt-8 mb-6">
-          Sources:{" "}
-          <a href="https://sportnews.24tv.ua/ru/paralimpiada-2026-sportsmeny-rossii-kotorye-srazhalis-protiv_n3011932" className="underline" target="_blank" rel="noopener noreferrer">24tv.ua / Suspilne</a>,{" "}
-          <a href="https://khpg.org/en/1608815528" className="underline" target="_blank" rel="noopener noreferrer">KHPG.org</a>,{" "}
-          <a href="https://society.comments.ua/news/warrussia/voennyh-kotorye-ubivali-ukraincev-pustili-na-paralimpiyskie-igry-2026-797825.html" className="underline" target="_blank" rel="noopener noreferrer">Comments.ua</a>,
-          Russian media self-reporting.
+        <h3 className="text-xl font-bold mb-2">
+          The 4 Belarusian athletes invited
+        </h3>
+        <p className="text-muted mb-4 text-sm">
+          All in para cross-country skiing (1 male, 3 female).
         </p>
-        <a
-          href="/dossier"
-          className="bg-accent text-black font-bold px-6 py-3 text-sm tracking-wide hover:opacity-90 transition inline-block"
-        >
-          READ FULL DOSSIER WITH SOURCES
-        </a>
+        <div className="flex flex-wrap gap-2 mb-8">
+          {BELARUSIAN_ATHLETES.map((a) => (
+            <span
+              key={a.name}
+              className="border border-border px-3 py-1 text-sm text-foreground"
+            >
+              {a.name}
+            </span>
+          ))}
+        </div>
 
-        <div className="bg-white/5 border border-border p-6 mt-10">
-          <h4 className="font-bold mb-2">The contrast</h4>
-          <p className="text-muted text-sm leading-relaxed">
-            Ukrainian skeleton athlete{" "}
-            <strong className="text-foreground">Vladyslav Heraskevych</strong>{" "}
-            was{" "}
-            <a href="https://sports.yahoo.com/articles/ukrainian-skeleton-racer-banned-olympics-153402286.html" className="underline" target="_blank" rel="noopener noreferrer">banned from the 2026 Winter Olympics</a>{" "}
-            for wearing a helmet honoring Ukrainian athletes killed by Russia.
-            The same Court of Arbitration for Sport that upheld his ban then
-            overturned the ski federation&apos;s block on Russian
-            qualification. A Ukrainian was banned for remembering the dead.
-            Russians are welcomed to compete under their flag.
-          </p>
+        <p className="text-muted text-sm">
+          Russia has confirmed a{" "}
+          <a
+            href="https://tass.com/sports/2088623"
+            className="text-accent underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            23-member delegation
+          </a>{" "}
+          including coaches, support staff, and officials.
+        </p>
+      </section>
+
+      <div className="border-t border-border" />
+
+      {/* Why it matters */}
+      <section id="why-it-matters" className="px-6 py-20 max-w-3xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          Why it matters
+        </h2>
+
+        <div className="space-y-8">
+          {/* The 500 veterans */}
+          <div>
+            <h3 className="text-xl font-bold mb-2">
+              500 war veterans in Russian Paralympic sport
+            </h3>
+            <p className="text-muted leading-relaxed mb-4">
+              The 6 invited athletes are not former military. But the Russian
+              Paralympic Committee president Pavel Rozhkov stated in his 2026 New
+              Year&apos;s address that{" "}
+              <strong className="text-foreground">
+                approximately 500 participants in the war against Ukraine are in
+                Russian Paralympic teams
+              </strong>
+              . The RPC describes channeling military personnel into Paralympic
+              sport as &ldquo;one of the most important and serious areas of
+              their activities.&rdquo;
+            </p>
+            <p className="text-muted text-sm mb-4">
+              The{" "}
+              <a
+                href="https://suspilne.media/1243028-rosijski-sportsmeni-aki-vouvali-proti-ukraini-teper-maut-ambicii-na-ucast-u-paralimpiadi/"
+                className="text-accent underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Suspilne investigation
+              </a>{" "}
+              (February 18, 2026) identified and profiled 10 of these veterans.
+              They are in the broader team, reserves, and pipeline — and openly
+              declare Paralympic ambitions.
+            </p>
+
+            <div className="space-y-4">
+              {COMBATANT_HIGHLIGHTS.map((person) => (
+                <div
+                  key={person.name}
+                  className="border-l-2 border-red-400 pl-4"
+                >
+                  <h4 className="font-bold">{person.name}</h4>
+                  <p className="text-muted text-sm leading-relaxed">
+                    {person.detail}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href="/dossier"
+              className="text-accent underline text-sm mt-4 inline-block"
+            >
+              Read full dossier: all 10 sourced profiles &rarr;
+            </a>
+          </div>
+
+          {/* Institutional program */}
+          <div className="bg-white/5 border border-border p-6">
+            <h3 className="font-bold mb-2">The institutional escalation</h3>
+            <ul className="text-muted text-sm space-y-2 leading-relaxed">
+              <li>
+                <strong className="text-foreground">March 2023:</strong> Rozhkov
+                stated Paralympic athletes were visiting military hospitals and
+                war participants.
+              </li>
+              <li>
+                <strong className="text-foreground">2024:</strong> Began publicly
+                including veterans in Paralympic teams.
+              </li>
+              <li>
+                <strong className="text-foreground">2026:</strong> Claims 500 war
+                veterans in teams. Calls it a key institutional priority.
+              </li>
+            </ul>
+          </div>
+
+          {/* The contrast */}
+          <div className="bg-white/5 border border-border p-6">
+            <h3 className="font-bold mb-2">The contrast</h3>
+            <p className="text-muted text-sm leading-relaxed">
+              Ukrainian skeleton athlete{" "}
+              <strong className="text-foreground">
+                Vladyslav Heraskevych
+              </strong>{" "}
+              was{" "}
+              <a
+                href="https://sports.yahoo.com/articles/ukrainian-skeleton-racer-banned-olympics-153402286.html"
+                className="underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                banned from the 2026 Winter Olympics
+              </a>{" "}
+              for wearing a helmet honoring Ukrainian athletes killed by Russia.
+              The same Court of Arbitration for Sport that upheld his ban then
+              overturned the ski federation&apos;s block on Russian
+              qualification. A Ukrainian was banned for remembering the dead.
+              Russians are welcomed to compete under their flag.
+            </p>
+          </div>
+
+          {/* What this normalizes */}
+          <div>
+            <h3 className="text-xl font-bold mb-2">
+              What this normalizes
+            </h3>
+            <p className="text-muted leading-relaxed">
+              Allowing Russia to compete under its flag during an ongoing war
+              of aggression signals that there are no lasting consequences for
+              invading a sovereign country. It provides a propaganda victory: Russia
+              can claim the international community has moved on. It sets the
+              precedent for full Russian reinstatement at the LA 2028 Summer
+              Olympics. And it does all of this while{" "}
+              <a
+                href="https://en.kremlin.ru/events/president/news/68284"
+                className="underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                the athletes shake hands with the president who ordered the
+                invasion
+              </a>
+              .
+            </p>
+          </div>
         </div>
       </section>
 
       <div className="border-t border-border" />
 
-      {/* Take action */}
-      <section id="take-action" className="px-6 py-20 max-w-3xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold mb-2">Take action</h2>
-        <p className="text-muted mb-8">
-          Sports bodies respond to reputational cost, not moral arguments.
-          Here&apos;s what actually works.
-        </p>
-
-        <div className="mb-10">
-          <h3 className="text-xl font-bold mb-2">1. Pressure the sponsors</h3>
-          <p className="text-muted mb-4 leading-relaxed">
-            These companies fund the Paralympics. They react when tagged
-            publicly. Write a calm, factual post and tag them. Ask a question —
-            don&apos;t rant.
+      {/* What can we do */}
+      <section id="what-can-we-do" className="px-6 py-20 max-w-3xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold mb-2">
+          What can we do
+        </h2>
+        <div className="bg-white/5 border border-border p-6 mb-8">
+          <h3 className="font-bold mb-2">Realistic goals</h3>
+          <p className="text-muted text-sm leading-relaxed">
+            The decision to allow Russia to compete is legally final (IPC General
+            Assembly vote + CAS ruling). Reversing it in the remaining days
+            before March 6 is unlikely. But we can{" "}
+            <strong className="text-foreground">
+              make this decision politically costly
+            </strong>{" "}
+            — so that full Russian reinstatement at LA 2028 becomes harder. In
+            2022, FIFA reversed its position on Russia in 4 days because
+            national teams refused to play. Reputational cost works.
           </p>
-          <div className="flex flex-wrap gap-2 mb-4">
-            {SPONSORS.map((s) => (
-              <span
-                key={s}
-                className="border border-border px-3 py-1 text-sm text-foreground"
-              >
-                {s}
-              </span>
-            ))}
+        </div>
+
+        <div className="space-y-10">
+          <div>
+            <h3 className="text-xl font-bold mb-2">
+              1. Pressure the sponsors
+            </h3>
+            <p className="text-muted mb-4 leading-relaxed">
+              These companies fund the Paralympics. They react when tagged
+              publicly. Write a calm, factual post and tag them. Ask a question —
+              don&apos;t rant.
+            </p>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {SPONSORS.map((s) => (
+                <span
+                  key={s}
+                  className="border border-border px-3 py-1 text-sm text-foreground"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+            <div className="bg-white/5 border border-border p-4 text-sm text-muted">
+              <p className="italic">
+                &ldquo;@[Sponsor] — The 2026 Paralympics will feature athletes
+                competing under the Russian flag during an ongoing war of
+                aggression. Russia&apos;s own Paralympic president claims 500 war
+                veterans are in their teams. Does [Sponsor] support this? We
+                would welcome a public statement.&rdquo;
+              </p>
+            </div>
           </div>
-          <div className="bg-white/5 border border-border p-4 text-sm text-muted">
-            <p className="italic">
-              &ldquo;@[Sponsor] — The 2026 Paralympics will feature athletes
-              who served in Russia&apos;s military invasion of Ukraine,
-              competing under the Russian flag. Does [Sponsor] support this? We
-              would welcome a public statement.&rdquo;
+
+          <div>
+            <h3 className="text-xl font-bold mb-2">
+              2. Contact your national Paralympic committee
+            </h3>
+            <p className="text-muted leading-relaxed">
+              National committees vote inside the IPC. Ask yours to publicly
+              oppose the reinstatement or demand neutral status (no flags, no
+              anthem). Internal dissent changes votes. The IPC General Assembly
+              was 91-77 — it was not a landslide.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold mb-2">
+              3. Write to elected representatives
+            </h3>
+            <p className="text-muted leading-relaxed">
+              Sports ministers intervene. Email your MP, MEP, or Congress member.
+              Ask them to issue a statement or raise a diplomatic objection. The{" "}
+              <a
+                href="https://valtioneuvosto.fi/en/-/1410845/sports-ministers-express-concern-over-ipc-decision-not-to-maintain-suspensions-on-russia-and-belarus-1"
+                className="text-accent underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                35-country coalition
+              </a>{" "}
+              shows this channel works — push them to go further.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold mb-2">4. Share the evidence</h3>
+            <p className="text-muted leading-relaxed">
+              The combatant-athlete story is underreported in English-language
+              media. Share the{" "}
+              <a href="/dossier" className="text-accent underline">
+                sourced dossier
+              </a>{" "}
+              with journalists and on social media. Journalists need documented
+              cases, not opinion — that&apos;s what we provide.
             </p>
           </div>
         </div>
 
-        <div className="mb-10">
-          <h3 className="text-xl font-bold mb-2">
-            2. Contact your national Paralympic committee
-          </h3>
-          <p className="text-muted leading-relaxed">
-            National committees vote inside the IPC. Ask yours to publicly
-            oppose the reinstatement or demand neutral status (no flags, no
-            anthem). Internal dissent changes votes.
-          </p>
-        </div>
-
-        <div className="mb-10">
-          <h3 className="text-xl font-bold mb-2">
-            3. Write to elected representatives
-          </h3>
-          <p className="text-muted leading-relaxed">
-            Sports ministers intervene. Email your MP, MEP, or Congress member.
-            Ask them to issue a statement or raise a diplomatic objection. The
-            35-country coalition shows this channel works.
-          </p>
-        </div>
-
-        <div className="mb-10">
-          <h3 className="text-xl font-bold mb-2">4. Amplify in media</h3>
-          <p className="text-muted leading-relaxed">
-            Share the combatant profiles with journalists. Submit letters to
-            editors. The story of former soldiers getting Paralympic wild-cards
-            is underreported in English-language media. Journalists need
-            documented cases and credible sources — that&apos;s what we provide.
-          </p>
-        </div>
-
-        <div className="bg-white/5 border border-border p-6 mt-4 mb-8">
+        <div className="bg-white/5 border border-border p-6 mt-8 mb-6">
           <h4 className="font-bold mb-2">How to frame it</h4>
           <p className="text-muted text-sm leading-relaxed mb-2">
-            <span className="text-red-400">Wrong:</span> &ldquo;Ban all
-            Russians from sport.&rdquo;
+            <span className="text-red-400">Wrong:</span> &ldquo;Ban all Russians
+            from sport.&rdquo;
           </p>
           <p className="text-muted text-sm leading-relaxed">
-            <span className="text-green-400">Right:</span> &ldquo;Athletes
-            directly connected to a military invasion cannot represent a state
-            with flags and anthems during an ongoing war.&rdquo;
+            <span className="text-green-400">Right:</span> &ldquo;A country
+            waging a war of aggression should not parade under its flag and
+            anthem at the Paralympics. National symbols reward the state, not the
+            athletes.&rdquo;
           </p>
         </div>
 
@@ -319,8 +585,364 @@ export default function Home() {
           href="/action"
           className="bg-accent text-black font-bold px-6 py-3 text-sm tracking-wide hover:opacity-90 transition inline-block"
         >
-          DETAILED ACTION PLAN: WHO TO CONTACT, TEMPLATES, TIMELINE
+          DETAILED ACTION PLAN: CONTACTS, TEMPLATES, TIMELINE
         </a>
+      </section>
+
+      <div className="border-t border-border" />
+
+      {/* Resources */}
+      <section id="resources" className="px-6 py-20 max-w-3xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold mb-6">Resources</h2>
+
+        <div className="space-y-8">
+          {/* Investigations */}
+          <div>
+            <h3 className="font-bold mb-3">Investigations &amp; evidence</h3>
+            <ul className="text-muted text-sm space-y-2 leading-relaxed">
+              <li>
+                <a
+                  href="https://suspilne.media/1243028-rosijski-sportsmeni-aki-vouvali-proti-ukraini-teper-maut-ambicii-na-ucast-u-paralimpiadi/"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Suspilne investigation (Ukrainian)
+                </a>{" "}
+                — Original investigation by Alla Sadovnyk &amp; Hanna Kalaur
+                identifying 10 war veterans in Russian Paralympic teams (Feb 18,
+                2026)
+              </li>
+              <li>
+                <a
+                  href="https://khpg.org/en/1608815528"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  KHPG.org (English)
+                </a>{" "}
+                — Kharkiv Human Rights Protection Group English-language summary
+              </li>
+              <li>
+                <a href="/dossier" className="text-accent underline">
+                  Sourced dossier (this site)
+                </a>{" "}
+                — All 10 war veteran profiles with military unit details, quotes,
+                and linked sources
+              </li>
+              <li>
+                <a
+                  href="https://sport.nv.ua/ukr/olimpiada-2026/paralimpiada-2026-mpk-dopustiv-rosiyu-z-praporom-i-gimnom-sered-sportsmeniv-kolishni-viyskovi-50584100.html"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  NV.ua (Ukrainian)
+                </a>{" "}
+                — Additional coverage of veteran-athlete pipeline
+              </li>
+              <li>
+                <a
+                  href="https://sportnews.24tv.ua/ru/paralimpiada-2026-sportsmeny-rossii-kotorye-srazhalis-protiv_n3011932"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  24tv.ua / Suspilne (Russian)
+                </a>{" "}
+                — Athlete profiles summary
+              </li>
+              <li>
+                <a
+                  href="https://society.comments.ua/news/warrussia/voennyh-kotorye-ubivali-ukraincev-pustili-na-paralimpiyskie-igry-2026-797825.html"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Comments.ua
+                </a>{" "}
+                — Coverage of war veterans in Paralympic teams
+              </li>
+            </ul>
+          </div>
+
+          {/* IPC decisions */}
+          <div>
+            <h3 className="font-bold mb-3">IPC decisions &amp; rulings</h3>
+            <ul className="text-muted text-sm space-y-2 leading-relaxed">
+              <li>
+                <a
+                  href="https://www.paralympic.org/news/update-potential-participation-npc-belarus-and-russia-milano-cortina-2026"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  IPC: Update on Russia &amp; Belarus participation (Feb 17,
+                  2026)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.paralympic.org/news/ipc-general-assembly-votes-not-maintain-npc-russia-s-partial-suspension"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  IPC General Assembly vote to lift suspension (Sep 27, 2025)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.tas-cas.org/en/news/CAS-confirms-appeal-by-Russian-Ski-Association"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  CAS ruling overturning FIS block on Russian qualification (Dec
+                  2, 2025)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.insidethegames.biz/articles/end-of-paralympic-neutral-status-for-russia-and-belarus"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Inside the Games: End of Paralympic neutral status
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* International news */}
+          <div>
+            <h3 className="font-bold mb-3">International news coverage</h3>
+            <ul className="text-muted text-sm space-y-2 leading-relaxed">
+              <li>
+                <a
+                  href="https://www.aljazeera.com/sports/2026/2/18/russian-belarusian-athletes-to-compete-under-own-flag-at-paralympics-2026"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Al Jazeera: Russian, Belarusian athletes to compete under own
+                  flag
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://kyivindependent.com/russian-belarusian-athletes-to-compete-under-national-flags-at-2026-winter-paralympics/"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Kyiv Independent: Competing under national flags
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.france24.com/en/sport/20260217-paralympic-governing-body-lifts-ban-on-russian-and-belarusian-athletes-ahead-of-2026-games"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  France 24: Paralympic governing body lifts ban
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.skysports.com/olympics/news/29877/13508851/paralympics-russian-and-belarusian-athletes-to-compete-under-own-flag-at-milan-cortina-games"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Sky Sports: Russia &amp; Belarus to compete under own flag
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.espn.com/olympics/story/_/id/47958708/russians-compete-own-flag-next-month-paralympics-says-ipc"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ESPN: Russians to compete under own flag
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.nbcnews.com/world/ukraine/ukraine-boycott-winter-paralympics-russians-competing-flag-belarus-rcna259525"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  NBC News: Ukraine to boycott Winter Paralympics
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://united24media.com/latest-news/russian-and-belarusian-athletes-cleared-to-compete-under-national-flags-at-2026-winter-paralympics-16016"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  UNITED24: Athletes cleared to compete under national flags
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Government responses */}
+          <div>
+            <h3 className="font-bold mb-3">Government responses</h3>
+            <ul className="text-muted text-sm space-y-2 leading-relaxed">
+              <li>
+                <a
+                  href="https://valtioneuvosto.fi/en/-/1410845/sports-ministers-express-concern-over-ipc-decision-not-to-maintain-suspensions-on-russia-and-belarus-1"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  35-country joint statement (Finland-led coalition)
+                </a>{" "}
+                — France, Germany, Japan, Australia, Canada, Italy, and 29 more
+              </li>
+              <li>
+                <a
+                  href="https://sports.yahoo.com/articles/government-hits-paralympics-allowing-brutal-222505359.html"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  UK Sports Minister Lisa Nandy: &ldquo;completely the wrong
+                  decision&rdquo;
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.euronews.com/my-europe/2026/02/18/eu-commissioner-boycotts-paralympics-opening-ceremony-over-russian-and-belarusian-flags"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  EU Commissioner Glenn Micallef boycotting opening ceremony
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Heraskevych */}
+          <div>
+            <h3 className="font-bold mb-3">The Heraskevych case</h3>
+            <ul className="text-muted text-sm space-y-2 leading-relaxed">
+              <li>
+                <a
+                  href="https://sports.yahoo.com/articles/ukrainian-skeleton-racer-banned-olympics-153402286.html"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Vladyslav Heraskevych banned from 2026 Olympics for memorial
+                  helmet
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Russian sources */}
+          <div>
+            <h3 className="font-bold mb-3">
+              Russian state media (self-reporting)
+            </h3>
+            <p className="text-muted text-xs mb-2">
+              These sources are Russian state-controlled media. They are included
+              because they contain statements by athletes and officials that
+              serve as primary evidence.
+            </p>
+            <ul className="text-muted text-sm space-y-2 leading-relaxed">
+              <li>
+                <a
+                  href="https://tass.com/sports/2087843"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  TASS: Six Russian athletes receive invitations
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://tass.com/sports/2088623"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  TASS: Russia confirms 23-member delegation
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://tass.com/sports/2088077"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  TASS: Four of six athletes granted Italian visas
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://en.iz.ru/en/2044175/2026-02-17/six-russian-athletes-have-received-invitations-2026-paralympics"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Izvestia: Six athletes invited to 2026 Paralympics
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://en.kremlin.ru/events/president/news/68284"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Kremlin.ru: Putin meets Paralympic team after Beijing 2022
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://paralymp.ru/press_center/news/official/09-02-2026-veteranu_svo_chempionu_rossii_po_strelbe_iz_luka_sporta_lits_s_poda_n_bondarenko_prisvoeno_zvanie_ma/"
+                  className="text-accent underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Paralymp.ru: War veteran Bondarenko awarded Master of Sport
+                  (Feb 2026)
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* This campaign */}
+          <div>
+            <h3 className="font-bold mb-3">This campaign</h3>
+            <ul className="text-muted text-sm space-y-2 leading-relaxed">
+              <li>
+                <a href="/dossier" className="text-accent underline">
+                  Sourced dossier: 10 war veteran profiles
+                </a>
+              </li>
+              <li>
+                <a href="/action" className="text-accent underline">
+                  Detailed action plan: contacts, templates, timeline
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       <div className="border-t border-border" />
@@ -329,8 +951,8 @@ export default function Home() {
       <section id="subscribe" className="px-6 py-20 max-w-3xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold mb-2">Stay updated</h2>
         <p className="text-muted mb-6">
-          Subscribe to receive coordinated action updates, sponsor response
-          tracking, and campaign news. We will not spam you.
+          Subscribe to receive updates on sponsor responses, media coverage, and
+          coordination for the LA 2028 campaign.
         </p>
 
         {submitted ? (
@@ -364,7 +986,7 @@ export default function Home() {
         </p>
         <p>
           All facts are sourced from public reporting. This campaign targets
-          institutions and symbols — not individual disability.
+          institutions and symbols — not individual athletes or disability.
         </p>
       </footer>
     </main>
