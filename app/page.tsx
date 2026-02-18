@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const RUSSIAN_ATHLETES = [
   {
@@ -89,6 +89,50 @@ const SPONSORS = [
 export default function Home() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [stats, setStats] = useState<{
+    actionTakers: number;
+    totalActions: number;
+  } | null>(null);
+  const [checkedActions, setCheckedActions] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const saved: string[] = JSON.parse(
+      localStorage.getItem("nro_actions") || "[]"
+    );
+    setCheckedActions(new Set(saved));
+    fetch("/api/actions")
+      .then((r) => r.json())
+      .then((data) => setStats(data))
+      .catch(() => {});
+  }, []);
+
+  const recordAction = async (actionKey: string) => {
+    const saved: string[] = JSON.parse(
+      localStorage.getItem("nro_actions") || "[]"
+    );
+    if (saved.includes(actionKey)) return;
+    const isFirstAction = saved.length === 0;
+    saved.push(actionKey);
+    localStorage.setItem("nro_actions", JSON.stringify(saved));
+    setCheckedActions(new Set(saved));
+    setStats((prev) =>
+      prev
+        ? {
+            actionTakers: isFirstAction
+              ? prev.actionTakers + 1
+              : prev.actionTakers,
+            totalActions: prev.totalActions + 1,
+          }
+        : null
+    );
+    try {
+      await fetch("/api/actions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: actionKey, isFirstAction }),
+      });
+    } catch {}
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -146,6 +190,23 @@ export default function Home() {
             WHAT CAN WE DO
           </a>
         </div>
+
+        {stats !== null && (
+          <div className="flex gap-10 mt-10 text-sm text-muted">
+            <div>
+              <span className="block text-2xl md:text-3xl font-bold text-foreground">
+                {stats.actionTakers.toLocaleString()}
+              </span>
+              people took action
+            </div>
+            <div>
+              <span className="block text-2xl md:text-3xl font-bold text-foreground">
+                {stats.totalActions.toLocaleString()}
+              </span>
+              actions recorded
+            </div>
+          </div>
+        )}
       </section>
 
       <div className="border-t border-border" />
@@ -591,6 +652,93 @@ export default function Home() {
 
       <div className="border-t border-border" />
 
+      {/* Action Tracker */}
+      <section id="track-actions" className="px-6 py-20 max-w-3xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold mb-2">
+          Record what you&apos;ve done
+        </h2>
+        <p className="text-muted mb-8 leading-relaxed">
+          Check off actions as you take them. Your progress is saved in your
+          browser and counted in the totals above.
+        </p>
+
+        <div className="space-y-8">
+          <ChecklistGroup
+            title="Social media"
+            items={[
+              { key: "tagged_visa_twitter", label: "Tagged Visa on Twitter/X" },
+              {
+                key: "tagged_cocacola_twitter",
+                label: "Tagged Coca-Cola on Twitter/X",
+              },
+              {
+                key: "tagged_samsung_twitter",
+                label: "Tagged Samsung on Twitter/X",
+              },
+              {
+                key: "tagged_airbnb_twitter",
+                label: "Tagged Airbnb on Twitter/X",
+              },
+              {
+                key: "tagged_allianz_twitter",
+                label: "Tagged Allianz on Twitter/X",
+              },
+              {
+                key: "tagged_sponsor_instagram",
+                label: "Tagged a sponsor on Instagram",
+              },
+              {
+                key: "tagged_sponsor_tiktok",
+                label: "Tagged a sponsor on TikTok",
+              },
+              { key: "shared_site", label: "Shared the site" },
+            ]}
+            checked={checkedActions}
+            onCheck={recordAction}
+          />
+          <ChecklistGroup
+            title="Direct contact"
+            items={[
+              { key: "emailed_sponsor", label: "Emailed a sponsor" },
+              {
+                key: "emailed_committee",
+                label: "Emailed national Paralympic committee",
+              },
+              {
+                key: "emailed_representative",
+                label: "Emailed MP / MEP / representative",
+              },
+            ]}
+            checked={checkedActions}
+            onCheck={recordAction}
+          />
+          <ChecklistGroup
+            title="Amplification"
+            items={[
+              {
+                key: "contacted_journalist",
+                label: "Sent to a journalist or media contact",
+              },
+              {
+                key: "shared_community",
+                label: "Shared in a group chat or community",
+              },
+            ]}
+            checked={checkedActions}
+            onCheck={recordAction}
+          />
+        </div>
+
+        {checkedActions.size > 0 && (
+          <p className="text-accent text-sm mt-8 font-bold">
+            You&apos;ve recorded {checkedActions.size} action
+            {checkedActions.size !== 1 ? "s" : ""}. Thank you.
+          </p>
+        )}
+      </section>
+
+      <div className="border-t border-border" />
+
       {/* Resources */}
       <section id="resources" className="px-6 py-20 max-w-3xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold mb-6">Resources</h2>
@@ -990,5 +1138,50 @@ export default function Home() {
         </p>
       </footer>
     </main>
+  );
+}
+
+function ChecklistGroup({
+  title,
+  items,
+  checked,
+  onCheck,
+}: {
+  title: string;
+  items: { key: string; label: string }[];
+  checked: Set<string>;
+  onCheck: (key: string) => void;
+}) {
+  return (
+    <div>
+      <h3 className="font-bold text-xs uppercase tracking-widest text-muted mb-3">
+        {title}
+      </h3>
+      <div className="space-y-2">
+        {items.map((item) => {
+          const done = checked.has(item.key);
+          return (
+            <button
+              key={item.key}
+              onClick={() => onCheck(item.key)}
+              className={`flex items-center gap-3 w-full text-left text-sm py-2 px-3 border transition ${
+                done
+                  ? "border-accent text-foreground"
+                  : "border-border text-muted hover:border-white/30"
+              }`}
+            >
+              <span
+                className={`w-4 h-4 border flex-shrink-0 flex items-center justify-center text-xs font-bold ${
+                  done ? "border-accent bg-accent text-black" : "border-border"
+                }`}
+              >
+                {done ? "✓" : ""}
+              </span>
+              {item.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }

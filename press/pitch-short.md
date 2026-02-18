@@ -20,7 +20,7 @@ Suspilne investigation (Ukrainian): https://suspilne.media/1243028-rosijski-spor
 
 English summary (KHPG): https://khpg.org/en/1608815528
 
-Full sourced dossier (English): [insert website URL when deployed]
+Full sourced dossier (English): https://no-russia-at-olympics.vercel.app/dossier
 
 Happy to connect you with additional sources if useful.
 
