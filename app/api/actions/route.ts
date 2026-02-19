@@ -1,46 +1,33 @@
 import { NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
+import { Redis } from "@upstash/redis";
 
-const ACTIONS_FILE = path.join("/tmp", "actions.json");
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
 
-interface ActionsData {
-  actionTakers: number;
-  totalActions: number;
-  pageViews: number;
-  uniqueVisitors: number;
-  byAction: Record<string, number>;
-}
-
-async function readData(): Promise<ActionsData> {
-  try {
-    const data = await fs.readFile(ACTIONS_FILE, "utf-8");
-    return JSON.parse(data);
-  } catch {
-    return {
-      actionTakers: 0,
-      totalActions: 0,
-      pageViews: 0,
-      uniqueVisitors: 0,
-      byAction: {},
-    };
-  }
-}
-
-async function writeData(data: ActionsData) {
-  await fs.writeFile(ACTIONS_FILE, JSON.stringify(data));
-}
+const KEY = "stats";
 
 export async function GET() {
-  const data = await readData();
+  const [actionTakers, totalActions, pageViews, uniqueVisitors, twitterClicks, instagramClicks, tiktokClicks] =
+    await Promise.all([
+      redis.hget<number>(KEY, "actionTakers"),
+      redis.hget<number>(KEY, "totalActions"),
+      redis.hget<number>(KEY, "pageViews"),
+      redis.hget<number>(KEY, "uniqueVisitors"),
+      redis.hget<number>(KEY, "byAction:platform_twitter"),
+      redis.hget<number>(KEY, "byAction:platform_instagram"),
+      redis.hget<number>(KEY, "byAction:platform_tiktok"),
+    ]);
+
   return NextResponse.json({
-    actionTakers: data.actionTakers,
-    totalActions: data.totalActions,
-    pageViews: data.pageViews || 0,
-    uniqueVisitors: data.uniqueVisitors || 0,
-    twitterClicks: data.byAction["platform_twitter"] || 0,
-    instagramClicks: data.byAction["platform_instagram"] || 0,
-    tiktokClicks: data.byAction["platform_tiktok"] || 0,
+    actionTakers: actionTakers || 0,
+    totalActions: totalActions || 0,
+    pageViews: pageViews || 0,
+    uniqueVisitors: uniqueVisitors || 0,
+    twitterClicks: twitterClicks || 0,
+    instagramClicks: instagramClicks || 0,
+    tiktokClicks: tiktokClicks || 0,
   });
 }
 
@@ -53,23 +40,20 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid action" }, { status: 400 });
     }
 
-    const data = await readData();
-
     if (action === "page_view") {
-      data.pageViews = (data.pageViews || 0) + 1;
+      await redis.hincrby(KEY, "pageViews", 1);
     } else if (action === "unique_visit") {
-      data.uniqueVisitors = (data.uniqueVisitors || 0) + 1;
+      await redis.hincrby(KEY, "uniqueVisitors", 1);
     } else if (increment) {
-      // Raw increment — no deduplication (used for platform clicks)
-      data.byAction[action] = (data.byAction[action] || 0) + 1;
+      await redis.hincrby(KEY, `byAction:${action}`, 1);
     } else {
-      // Deduplicated action
-      if (isFirstAction) data.actionTakers += 1;
-      data.totalActions += 1;
-      data.byAction[action] = (data.byAction[action] || 0) + 1;
+      const pipeline = redis.pipeline();
+      if (isFirstAction) pipeline.hincrby(KEY, "actionTakers", 1);
+      pipeline.hincrby(KEY, "totalActions", 1);
+      pipeline.hincrby(KEY, `byAction:${action}`, 1);
+      await pipeline.exec();
     }
 
-    await writeData(data);
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json({ error: "Failed" }, { status: 500 });
