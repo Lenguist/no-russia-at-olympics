@@ -34,10 +34,10 @@ export async function POST(request: Request) {
     if (NOTIFICATION_EMAIL) {
       tasks.push(
         resend.emails.send({
-          from: "No Russia at Paralympics <onboarding@resend.dev>",
+          from: "onboarding@resend.dev",
           to: NOTIFICATION_EMAIL,
           subject: `New subscriber: ${email}`,
-          text: `New subscriber signed up at no-russia-at-olympics.vercel.app\n\nEmail: ${email}\nTime: ${new Date().toISOString()}`,
+          html: `<p><strong>New subscriber</strong> at no-russia-at-olympics.vercel.app</p><p>Email: ${email}</p><p>Time: ${new Date().toISOString()}</p>`,
         })
       );
     }
