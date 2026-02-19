@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const RUSSIAN_ATHLETES = [
   {
@@ -203,6 +204,7 @@ export default function Home() {
   const [checkedActions, setCheckedActions] = useState<Set<string>>(new Set());
   const [selectedSponsor, setSelectedSponsor] = useState<string | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [expandedTier2, setExpandedTier2] = useState(false);
 
   useEffect(() => {
     const saved: string[] = JSON.parse(
@@ -212,14 +214,14 @@ export default function Home() {
     fetch("/api/actions")
       .then((r) => r.json())
       .then((data) => setStats(data))
-      .catch(() => {});
+      .catch(() => { });
 
     // Track page view
     fetch("/api/actions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "page_view" }),
-    }).catch(() => {});
+    }).catch(() => { });
 
     // Track unique visitor (once per browser)
     if (!localStorage.getItem("nro_visited")) {
@@ -228,7 +230,7 @@ export default function Home() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "unique_visit" }),
-      }).catch(() => {});
+      }).catch(() => { });
     }
   }, []);
 
@@ -244,12 +246,12 @@ export default function Home() {
     setStats((prev) =>
       prev
         ? {
-            ...prev,
-            actionTakers: isFirstAction
-              ? prev.actionTakers + 1
-              : prev.actionTakers,
-            totalActions: prev.totalActions + 1,
-          }
+          ...prev,
+          actionTakers: isFirstAction
+            ? prev.actionTakers + 1
+            : prev.actionTakers,
+          totalActions: prev.totalActions + 1,
+        }
         : null
     );
     try {
@@ -258,7 +260,7 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: actionKey, isFirstAction }),
       });
-    } catch {}
+    } catch { }
   };
 
   const trackPlatformClick = (platform: "twitter" | "instagram" | "tiktok") => {
@@ -271,7 +273,7 @@ export default function Home() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: `platform_${platform}`, increment: true }),
-    }).catch(() => {});
+    }).catch(() => { });
   };
 
   const copyText = async (text: string, key: string) => {
@@ -279,7 +281,7 @@ export default function Home() {
       await navigator.clipboard.writeText(text);
       setCopiedKey(key);
       setTimeout(() => setCopiedKey(null), 2000);
-    } catch {}
+    } catch { }
   };
 
   const taggedSponsors = new Set(
@@ -467,6 +469,24 @@ export default function Home() {
             </a>
           </li>
         </ul>
+
+        {/* Highlight Image */}
+        <div className="relative w-full aspect-video mb-10 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+          <Image
+            src="/images/flag.png"
+            alt="Russian Flag returning to Paralympics"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+          <div className="absolute bottom-4 left-4 right-4">
+            <p className="text-white text-sm font-medium opacity-90">
+              Russia returns to the Parade of Nations
+            </p>
+          </div>
+        </div>
+
 
         <div className="bg-white/5 border border-border p-6 mb-10">
           <h3 className="font-bold mb-2">Who opposes it</h3>
@@ -720,9 +740,8 @@ export default function Home() {
             {SPONSORS_DATA.map((s) => (
               <div
                 key={s.key}
-                className={`h-2 w-7 transition-colors ${
-                  taggedSponsors.has(s.key) ? "bg-accent" : "bg-border"
-                }`}
+                className={`h-2 w-7 transition-colors ${taggedSponsors.has(s.key) ? "bg-accent" : "bg-border"
+                  }`}
               />
             ))}
           </div>
@@ -730,10 +749,9 @@ export default function Home() {
             {taggedSponsors.size === 0
               ? "Tag 3 sponsors to unlock more actions"
               : taggedSponsors.size < 3
-              ? `${taggedSponsors.size}/3 — ${
-                  3 - taggedSponsors.size
+                ? `${taggedSponsors.size}/3 — ${3 - taggedSponsors.size
                 } more to unlock next steps`
-              : `${taggedSponsors.size} sponsors tagged`}
+                : `${taggedSponsors.size} sponsors tagged`}
           </span>
         </div>
 
@@ -748,13 +766,12 @@ export default function Home() {
                 onClick={() =>
                   setSelectedSponsor(selected ? null : sponsor.key)
                 }
-                className={`border p-3 text-left transition ${
-                  tagged
-                    ? "border-green-500 bg-green-950/40 text-foreground"
-                    : selected
+                className={`border p-3 text-left transition ${tagged
+                  ? "border-green-500 bg-green-950/40 text-foreground"
+                  : selected
                     ? "border-accent text-foreground"
                     : "border-border text-muted hover:border-white/30 hover:text-foreground"
-                }`}
+                  }`}
               >
                 <span className="block font-bold text-sm">{sponsor.name}</span>
                 <span className="block text-xs mt-1 text-muted">
@@ -801,11 +818,10 @@ export default function Home() {
                   <p className="text-sm leading-relaxed pr-20">{postText}</p>
                   <button
                     onClick={() => copyText(postText, sponsor.key)}
-                    className={`absolute top-3 right-3 text-xs font-bold px-3 py-1.5 transition ${
-                      copiedKey === sponsor.key
-                        ? "bg-green-600 text-white"
-                        : "bg-accent text-black hover:opacity-90"
-                    }`}
+                    className={`absolute top-3 right-3 text-xs font-bold px-3 py-1.5 transition ${copiedKey === sponsor.key
+                      ? "bg-green-600 text-white"
+                      : "bg-accent text-black hover:opacity-90"
+                      }`}
                   >
                     {copiedKey === sponsor.key ? "COPIED!" : "COPY"}
                   </button>
@@ -868,56 +884,68 @@ export default function Home() {
 
         {/* Tier 2 */}
         <div
-          className={`mt-4 transition-opacity ${
-            tier2Unlocked
-              ? ""
-              : "opacity-40 pointer-events-none select-none"
-          }`}
+          className={`mt-4 transition-all duration-300 ${tier2Unlocked
+            ? "opacity-100"
+            : "opacity-40 pointer-events-none select-none"
+            }`}
         >
-          <div className="flex items-center gap-3 mb-4">
-            <h3 className="font-bold text-lg">More ways to apply pressure</h3>
-            {!tier2Unlocked && (
-              <span className="text-xs text-muted border border-border px-2 py-0.5">
-                unlocks after 3 sponsors
+          <button
+            onClick={() => tier2Unlocked && setExpandedTier2(!expandedTier2)}
+            disabled={!tier2Unlocked}
+            className={`w-full flex items-center justify-between gap-3 mb-4 text-left group ${tier2Unlocked ? "cursor-pointer" : ""}`}
+          >
+            <div className="flex items-center gap-3">
+              <h3 className="font-bold text-lg group-hover:text-accent transition">More ways to apply pressure</h3>
+              {!tier2Unlocked && (
+                <span className="text-xs text-muted border border-border px-2 py-0.5">
+                  unlocks after 3 sponsors
+                </span>
+              )}
+            </div>
+            {tier2Unlocked && (
+              <span className="text-accent text-sm font-bold">
+                {expandedTier2 ? "− Close" : "+ Expand"}
               </span>
             )}
-          </div>
-          <div className="space-y-2">
-            {TIER2_ACTIONS.map((action) => {
-              const done = checkedActions.has(action.key);
-              return (
-                <div
-                  key={action.key}
-                  className={`border p-4 flex gap-3 ${
-                    done ? "border-green-600/50" : "border-border"
-                  }`}
-                >
-                  <button
-                    onClick={() => recordAction(action.key)}
-                    className={`w-5 h-5 border flex-shrink-0 flex items-center justify-center text-xs font-bold mt-0.5 transition ${
-                      done
+          </button>
+
+          {(expandedTier2 || !tier2Unlocked) && (
+            <div className="space-y-2">
+              {TIER2_ACTIONS.map((action) => {
+                const done = checkedActions.has(action.key);
+                return (
+                  <div
+                    key={action.key}
+                    className={`border p-4 flex gap-3 ${done ? "border-green-600/50" : "border-border"
+                      }`}
+                  >
+                    <button
+                      onClick={() => recordAction(action.key)}
+                      className={`w-5 h-5 border flex-shrink-0 flex items-center justify-center text-xs font-bold mt-0.5 transition ${done
                         ? "border-green-500 bg-green-500 text-black"
                         : "border-border hover:border-white/40"
-                    }`}
-                  >
-                    {done ? "✓" : ""}
-                  </button>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-bold text-sm">{action.label}</p>
-                    <p className="text-muted text-sm mt-0.5">{action.desc}</p>
-                    {action.href && (
-                      <a
-                        href={action.href}
-                        className="text-accent text-sm underline mt-1 inline-block"
-                      >
-                        {action.cta}
-                      </a>
-                    )}
+                        }`}
+                    >
+                      {done ? "✓" : ""}
+                    </button>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-sm">{action.label}</p>
+                      <p className="text-muted text-sm mt-0.5">{action.desc}</p>
+                      {action.href && (
+                        <a
+                          href={action.href}
+                          className="text-accent text-sm underline mt-1 inline-block"
+                        >
+                          {action.cta}
+                        </a>
+                      )}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+
+            </div>
+          )}
         </div>
 
         {/* Framing note */}
@@ -1362,7 +1390,7 @@ export default function Home() {
                         social: orgSocial,
                       }),
                     });
-                  } catch {}
+                  } catch { }
                   setOrgSubmitted(true);
                 }}
                 className="space-y-2"
@@ -1415,6 +1443,6 @@ export default function Home() {
           institutions and symbols — not individual athletes or disability.
         </p>
       </footer>
-    </main>
+    </main >
   );
 }
