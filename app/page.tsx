@@ -181,7 +181,42 @@ const TIER2_ACTIONS = [
 ];
 
 function getPostText(postName: string, twitterHandle: string): string {
-  return `@${twitterHandle} — The 2026 Paralympics will feature Russian athletes competing under their national flag during an ongoing war. Russia's Paralympic president claims 500 war veterans are in their teams. Does ${postName} support this? no-russia-at-olympics.vercel.app`;
+  return `@${twitterHandle} — The 2026 Paralympics will feature Russian athletes competing under their national flag during an ongoing war. Russia's Paralympic president claims 500 war veterans are in their teams. Does ${postName} support this? no-russia-at-olympics.org`;
+}
+
+const MILESTONES = [100, 500, 1000, 5000, 10000, 50000, 100000];
+
+function getNextMilestone(n: number): number {
+  return MILESTONES.find((m) => m > n) ?? MILESTONES[MILESTONES.length - 1];
+}
+
+function getPrevMilestone(n: number): number {
+  for (let i = MILESTONES.length - 1; i >= 0; i--) {
+    if (MILESTONES[i] <= n) return MILESTONES[i];
+  }
+  return 0;
+}
+
+function ProgressBar({ value, label }: { value: number; label: string }) {
+  const next = getNextMilestone(value);
+  const prev = getPrevMilestone(value);
+  const pct = Math.min((value - prev) / (next - prev), 1) * 100;
+  return (
+    <div className="mt-3">
+      <div className="flex justify-between text-xs text-muted mb-1">
+        <span>{label}</span>
+        <span>
+          {value.toLocaleString()} / {next.toLocaleString()}
+        </span>
+      </div>
+      <div className="h-1.5 bg-white/10 w-full">
+        <div
+          className="h-full bg-accent transition-all duration-700"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+    </div>
+  );
 }
 
 export default function Home() {
@@ -259,6 +294,14 @@ export default function Home() {
         body: JSON.stringify({ action: actionKey, isFirstAction }),
       });
     } catch {}
+  };
+
+  const uncheckAction = (actionKey: string) => {
+    const saved: string[] = JSON.parse(
+      localStorage.getItem("nro_actions") || "[]"
+    ).filter((k: string) => k !== actionKey);
+    localStorage.setItem("nro_actions", JSON.stringify(saved));
+    setCheckedActions(new Set(saved));
   };
 
   const trackPlatformClick = (platform: "twitter" | "instagram" | "tiktok") => {
@@ -347,7 +390,7 @@ export default function Home() {
         </div>
 
         {stats !== null && (
-          <div className="grid grid-cols-2 gap-6 mt-10 pt-8 border-t border-border text-sm">
+          <div className="mt-10 pt-8 border-t border-border text-sm space-y-6">
             <div>
               <p className="text-xs uppercase tracking-widest text-muted mb-3">
                 Website
@@ -366,6 +409,7 @@ export default function Home() {
                   <span className="text-muted ml-2">unique visitors</span>
                 </div>
               </div>
+              <ProgressBar value={stats.uniqueVisitors} label="Visitors milestone" />
             </div>
             <div>
               <p className="text-xs uppercase tracking-widest text-muted mb-3">
@@ -397,6 +441,7 @@ export default function Home() {
                   <span className="text-muted ml-2">on TikTok</span>
                 </div>
               </div>
+              <ProgressBar value={stats.actionTakers} label="Action-takers milestone" />
             </div>
           </div>
         )}
@@ -893,7 +938,7 @@ export default function Home() {
                   }`}
                 >
                   <button
-                    onClick={() => recordAction(action.key)}
+                    onClick={() => done ? uncheckAction(action.key) : recordAction(action.key)}
                     className={`w-5 h-5 border flex-shrink-0 flex items-center justify-center text-xs font-bold mt-0.5 transition ${
                       done
                         ? "border-green-500 bg-green-500 text-black"
