@@ -181,7 +181,7 @@ const TIER2_ACTIONS = [
 ];
 
 function getPostText(postName: string, twitterHandle: string): string {
-  return `@${twitterHandle} — The 2026 Paralympics will feature Russian athletes competing under their national flag during an ongoing war. Russia's Paralympic president claims 500 war veterans are in their teams. Does ${postName} support this? no-russia-at-olympics.org`;
+  return `@${twitterHandle} — The 2026 Paralympics will feature Russian athletes competing under their national flag during an ongoing war. Russia's Paralympic president claims 500 soldiers who fought in its war against Ukraine are in their broader teams. Does ${postName} sponsor this? no-russia-at-olympics.org`;
 }
 
 const MILESTONES = [100, 500, 1000, 5000, 10000, 50000, 100000];
@@ -370,9 +370,9 @@ export default function Home() {
           Russian flag and anthem at the Winter Paralympics. The war against
           Ukraine is ongoing. Among Russia&apos;s broader Paralympic teams are{" "}
           <strong className="text-foreground">
-            approximately 500 war veterans
+            approximately 500 soldiers who participated in Russia&apos;s war against Ukraine
           </strong>
-          , including soldiers from units linked to the Bucha massacre.
+          , including men from units that committed atrocities in Bucha.
         </p>
         <div className="flex gap-4 flex-wrap">
           <a
@@ -727,22 +727,23 @@ export default function Home() {
               What this normalizes
             </h3>
             <p className="text-muted leading-relaxed">
-              Allowing Russia to compete under its flag during an ongoing war
-              of aggression signals that there are no lasting consequences for
-              invading a sovereign country. It provides a propaganda victory: Russia
-              can claim the international community has moved on. It sets the
-              precedent for full Russian reinstatement at the LA 2028 Summer
-              Olympics. And it does all of this while{" "}
+              Russia&apos;s Paralympic team pipeline includes soldiers from
+              units that shelled civilians in Kyiv, occupied Bucha, and fought
+              for Hostomel airport. Welcoming them under Russia&apos;s flag
+              does not separate sport from politics — it takes a side. It tells
+              every country watching that an active war of aggression carries no
+              lasting international consequence.{" "}
               <a
                 href="https://en.kremlin.ru/events/president/news/68284"
                 className="underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                the athletes shake hands with the president who ordered the
-                invasion
+                These are athletes who shook hands with the president who
+                ordered the invasion
               </a>
-              .
+              . And it sets the precedent for full Russian reinstatement at LA
+              2028.
             </p>
           </div>
         </div>
