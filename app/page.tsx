@@ -180,8 +180,31 @@ const TIER2_ACTIONS = [
   },
 ];
 
-function getPostText(postName: string, twitterHandle: string): string {
-  return `@${twitterHandle} — The 2026 Paralympics will feature Russian athletes competing under their national flag during an ongoing war. Russia's Paralympic president claims 500 soldiers who fought in its war against Ukraine are in their broader teams. Does ${postName} sponsor this? no-russia-at-olympics.org`;
+const POST_TEMPLATES: Array<(postName: string, handle: string) => string> = [
+  (p, h) => `@${h} — The 2026 Paralympics will feature Russian athletes competing under their national flag during an ongoing war. Russia's Paralympic president claims 500 soldiers who fought in its war against Ukraine are in their broader teams. Does ${p} sponsor this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} — Russia is returning to the Paralympics under its flag while its war against Ukraine continues. The Russian Paralympic president says 500 soldiers who fought in that war are in their teams. Is ${p} comfortable sponsoring that? no-russia-at-olympics.org`,
+  (p, h) => `@${h} Russia's Paralympic president says 500 soldiers who participated in the war against Ukraine are now in their Paralympic teams. They will compete under the Russian flag at Milano-Cortina 2026 — during an active war. Does ${p} stand behind this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} — At the 2026 Winter Paralympics, Russia competes under its flag while actively waging war on Ukraine. Their Paralympic president has stated that 500 soldiers from that war are in Russian Paralympic teams. Should ${p} be sponsoring this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} The 2026 Paralympics open March 6. Russia marches under its flag for the first time since 2014 — while the war against Ukraine is ongoing. 500 soldiers who fought in that war are in their teams, per Russia's own Paralympic president. Does ${p} endorse this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} — Russia's own Paralympic president says 500 soldiers who fought in the war against Ukraine are part of Russian Paralympic teams. These athletes will compete under the Russian flag at the 2026 Paralympics — during an active war. Is this something ${p} wants to sponsor? no-russia-at-olympics.org`,
+  (p, h) => `@${h} At Milano-Cortina 2026, Russia will parade under its national flag at the Paralympics — while the war against Ukraine is ongoing. Russia's Paralympic president has said 500 soldiers who fought in that war are in their teams. Does ${p} support this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} — While Russia's war against Ukraine continues, Russian athletes will compete under their flag at the 2026 Paralympics. Russia's Paralympic president stated 500 soldiers from that war are in their broader teams. Is ${p} okay with sponsoring this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} Russia's Paralympic president announced that 500 soldiers who fought in the war against Ukraine are part of Russian Paralympic teams. They compete under the Russian flag at the 2026 Winter Paralympics — an active war ongoing. Does ${p} sponsor this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} — The 2026 Winter Paralympics will see Russia compete under its flag and anthem for the first time since Sochi 2014. The war against Ukraine is still ongoing. Russia's own Paralympic president says 500 soldiers from that war are in their teams. Does ${p} back this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} Russia is competing under its flag at the 2026 Paralympics while actively waging war on Ukraine. Their Paralympic president claims 500 soldiers who participated in that war are in their teams. Is ${p} comfortable with its sponsorship covering this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} — According to Russia's own Paralympic president, 500 soldiers who fought in the war against Ukraine are now in Russian Paralympic teams. They compete under Russia's flag at the 2026 Paralympics — war ongoing. Does ${p} want to be associated with this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} The 2026 Paralympics feature Russia under its national flag — the war against Ukraine is still active. Russia's Paralympic president has publicly said 500 soldiers from that war are part of their teams. Is this what ${p} is sponsoring? no-russia-at-olympics.org`,
+  (p, h) => `@${h} — Russia returns to the Paralympics under its flag this March, while the war it started against Ukraine continues. 500 soldiers who fought in that war are in Russian Paralympic teams, per their own president. Does ${p} endorse this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} Russia's own Paralympic president says 500 soldiers who participated in the war against Ukraine are in their Paralympic teams. They will march under the Russian flag at the 2026 Paralympics while that war is ongoing. Does ${p} sponsor this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} — At the 2026 Winter Paralympics, Russia competes under its flag and anthem — during an active war against Ukraine. Russia's Paralympic president has said 500 soldiers from that war are in their teams. Is ${p} okay with this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} The Russian Paralympic president publicly stated that 500 soldiers who fought in Russia's war against Ukraine are part of their Paralympic teams. Russia competes under its flag at the 2026 Games — war still ongoing. Does ${p} support this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} — Russia will compete under its flag at the 2026 Paralympics while the war against Ukraine continues. Per Russia's own Paralympic president: 500 soldiers who fought in that war are in their teams. Should ${p} be a part of this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} This March, Russia parades under its flag at the 2026 Paralympics — the war against Ukraine still active. Their own Paralympic president says 500 soldiers from that war are in their teams. Does ${p} sponsor this? no-russia-at-olympics.org`,
+  (p, h) => `@${h} — Russia's Paralympic president has stated that 500 soldiers who fought in the war against Ukraine are now part of Russian Paralympic teams. Russia competes under its flag at the 2026 Games during an ongoing war. Is this what ${p} chooses to sponsor? no-russia-at-olympics.org`,
+];
+
+function getPostText(postName: string, twitterHandle: string, variantIndex: number): string {
+  return POST_TEMPLATES[variantIndex % POST_TEMPLATES.length](postName, twitterHandle);
 }
 
 const MILESTONES = [100, 500, 1000, 5000, 10000, 50000, 100000];
@@ -220,6 +243,7 @@ function ProgressBar({ value, label }: { value: number; label: string }) {
 }
 
 export default function Home() {
+  const [variantIndex] = useState(() => Math.floor(Math.random() * POST_TEMPLATES.length));
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [orgEmail, setOrgEmail] = useState("");
@@ -817,7 +841,7 @@ export default function Home() {
             const sponsor = SPONSORS_DATA.find(
               (s) => s.key === selectedSponsor
             )!;
-            const postText = getPostText(sponsor.postName, sponsor.twitterHandle);
+            const postText = getPostText(sponsor.postName, sponsor.twitterHandle, variantIndex);
             const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
               postText
             )}`;
